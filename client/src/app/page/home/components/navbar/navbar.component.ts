@@ -10,6 +10,7 @@ import { InvitationState } from 'src/ngrx/states/invitation.state';
 import { NotificationComponent } from '../notification/notification.component';
 import { InviteService } from 'src/app/service/invite.service';
 import { Router } from '@angular/router';
+import { FileService } from 'src/app/service/file.service';
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
@@ -26,11 +27,15 @@ export class NavbarComponent implements OnInit {
     protected inviteService: InviteService,
     private store: Store<{ auth: AuthState; invite: InvitationState }>,
     private dialog: MatDialog,
-    public router:Router
+    public router:Router,
+    private fileService: FileService
   ) {
     this.auth$.subscribe((auth) => {
-      this.userId = auth.user?.userId ?? '';
-      // console.log(auth.user);
+      if(auth.loading == false){
+        this.userId = auth.user?.userId !;
+        // console.log(this.userId);
+      }
+      
     });
 
     this.invites$ = this.store.select('invite');
@@ -56,7 +61,9 @@ export class NavbarComponent implements OnInit {
     this.router.navigate([''])
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    
+  }
 
   logout = false;
 

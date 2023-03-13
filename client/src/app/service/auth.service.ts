@@ -21,6 +21,8 @@ import { Observable } from 'rxjs';
 export class AuthService {
   userInfo: any;
   idToken: string = '';
+
+  currentUserId!: string | null;
   constructor(
     private auth: Auth,
     private http: HttpClient,
@@ -29,7 +31,10 @@ export class AuthService {
   ) {
     authState(this.auth).subscribe(async (user) => {
       if (user != null) {
+        this.currentUserId = user.uid
+        localStorage.setItem('userId',user.uid)
         let temp: User = {
+          
           userId: user?.uid,
           email: user?.email,
           userName: user?.displayName,

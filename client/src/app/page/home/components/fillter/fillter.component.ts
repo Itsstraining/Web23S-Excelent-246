@@ -21,17 +21,17 @@ export class FillterComponent {
   userId!: string | null;
   files$: Observable<FileState>;
   auth$ = this.store.select('auth');
-  mode = false;
   constructor(
     private fileService: FileService,
     private store: Store<{ auth: AuthState; file: FileState }>,
     private dialog: MatDialog
   ) {
     this.auth$.subscribe((res) => {
-      this.userId = res.user?.userId!;
+      if(res.loading == false){
+        this.userId = res.user?.userId!
+      }
     });
     this.files$ = this.store.select('file');
-    // this.store.dispatch(FileActions.getFilesByUserId({ userId: this.userId! }));
   }
 
   onChange(event: any) {
@@ -73,7 +73,4 @@ export class FillterComponent {
     this.store.dispatch(FileActions.getFilesByTitle());
   }
 
-  viewMode() {
-    return (this.mode = true);
-  }
 }

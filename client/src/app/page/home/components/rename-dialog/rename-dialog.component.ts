@@ -15,7 +15,7 @@ import { User } from 'src/app/model/user.model';
   templateUrl: './rename-dialog.component.html',
   styleUrls: ['./rename-dialog.component.scss'],
 })
-export class RenameDialogComponent implements OnInit {
+export class RenameDialogComponent {
   files$!: Observable<FileState>;
   users$!: Observable<AuthState>;
   user!: User
@@ -41,17 +41,9 @@ export class RenameDialogComponent implements OnInit {
     this.dialogRef.close();
   }
 
-  submitRename() {
-    console.log();
-    this.dialogRef.close();
-  }
-
-  ngOnInit(): void {}
 
   test() {
     let newName = this.input.nativeElement.value;
-
-    // this.store.dispatch(FileActions.getFileById({ fileId: this.idToUpdate }));
 
     this.files$.subscribe((data) => {
       console.log(data.file);
@@ -76,10 +68,7 @@ export class RenameDialogComponent implements OnInit {
         },
       })
     );
-    // this.store.dispatch(FileActions.getFilesByUserId({ userId: this.user.userId!}));
-    // this.files$.subscribe((data) => {
-    //   console.log(data.file);
-    // })
     this.dialogRef.close();
+
   }
 }

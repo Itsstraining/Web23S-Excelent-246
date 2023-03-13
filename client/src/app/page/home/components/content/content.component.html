@@ -71,12 +71,12 @@
   [infiniteScrollThrottle]="50"
   (scrolled)="onScrollDown($event)"
   class="divTo"
-  *ngIf="(this.files$ | async)?.loading == false"
+  *ngIf="(this.files$ | async)?.loading == false "
 >
   <div *ngFor="let f1 of (this.files$ | async)?.files" class="divToVua">
     <img
       class="histories-contents-file-logo"
-      src="../../../assets/home_logos/microsoft-excel-logo.png"
+      src="../../../../../assets/logo/E-logo.png"
     />
     <span (click)="selectFile(f1.fileId)" class="histories-contents-title">{{
       f1.title

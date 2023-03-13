@@ -33,27 +33,19 @@ export class ContentComponent implements OnInit {
     this.auth$ = this.store.select('auth');
     this.files$ = this.store.select('file');
     this.auth$.subscribe((res) => {
-      if (res.loading == false) {
-        this.userId = res.user?.userId!;
-        console.log(this.userId);
-      }
+        // console.log(this.fileService.currentUserId)
+        // this.userId = this.fileService.currentUserId;
+        // console.log(this.userId);
     });
-    this.store.dispatch(FileActions.getFilesByUserId({ userId: this.userId! }));
+    this.store.dispatch(FileActions.getFilesByUserId({ userId: localStorage.getItem('userId')! }));
     this.appendItems();
   }
 
   ngOnInit() {
-    // this.store.dispatch(
-    //   FileActions.getFilesByMemberId({ memberId: this.userId! })
-    // );
     this.files$.subscribe((data) => {
       this.arr = data.files.slice(0, 8);
       this.arr2 = data.files;
     });
-
-    console.log(this.userId);
-    let a = this.fileService.getFilesByOwner(this.userId!);
-    console.log(a);
   }
 
   selectFile(fileId: string) {
@@ -86,12 +78,9 @@ export class ContentComponent implements OnInit {
 
   getId(fileId: string) {
     this.fileService.idToUpdate = fileId;
-    console.log(this.fileService.idToUpdate);
-    // this.store.dispatch(FileActions.getFileById({ fileId: fileId }));
   }
 
   onScrollDown(ev: any) {
-    console.log('scrolled down!!', ev);
     this.appendItems();
   }
 
