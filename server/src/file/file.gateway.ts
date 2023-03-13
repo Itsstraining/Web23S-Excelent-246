@@ -43,7 +43,7 @@ export class FileGateway{
 
   @SubscribeMessage('joinRoom')
   handleJoinRoom(client: Socket,payload:any) {
-    console.log('join room',client.id)
+    console.log('join room',payload.fileId)
     client.join('message-' + payload.fileId);
     let room = this.rooms.findIndex((room)=>room.roomId===payload.fileId);
     if(room==-1){
@@ -59,18 +59,15 @@ export class FileGateway{
 
   @SubscribeMessage('leaveRoom')
   handleLeaveRoom(client: Socket,payload:any) {
-    console.log('leave room',client.id)
+    console.log('leave room',payload.fileId)
     client.leave('message-' + payload.fileId);
     let room = this.rooms.findIndex((room)=>room.roomId===payload.fileId);
     if(room!=-1){
-      let user = this.rooms[room].users.findIndex((user)=>user.userInfo.userId===payload.user.userId);
+      let user = this.rooms[room].users.findIndex((user)=>user.userInfo.userId===payload.userId);
       if(user!=-1){
         this.rooms[room].users.splice(user,1);
       }
     }
-
     this.server.emit('leaveRoom',this.rooms[room]);
   }
-
-
 }

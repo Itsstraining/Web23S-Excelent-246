@@ -25,6 +25,9 @@ export class NotificationComponent implements OnInit{
     })
     this.invites$ = this.store.select('invite');
     this.store.dispatch(InvitationActions.getInvitations({idReceiver: this.userId}));
+    this.invites$.subscribe((res) => {
+      console.log(res.invitations)
+    })
   }
 
   ngOnInit(){

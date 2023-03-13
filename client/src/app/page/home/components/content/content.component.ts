@@ -33,6 +33,7 @@ export class ContentComponent implements OnInit {
     this.auth$ = this.store.select('auth');
     this.files$ = this.store.select('file');
     this.auth$.subscribe((res) => {
+      
         // console.log(this.fileService.currentUserId)
         // this.userId = this.fileService.currentUserId;
         // console.log(this.userId);

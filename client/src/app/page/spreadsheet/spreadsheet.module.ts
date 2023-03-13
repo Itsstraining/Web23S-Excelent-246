@@ -14,6 +14,8 @@ import { MiniFileComponent } from './components/mini-file/mini-file.component';
 import { ShareDialogComponent } from './components/share-dialog/share-dialog.component';
 import { ChatComponent } from './components/chat/chat.component';
 import { RenameComponent } from './components/rename/rename.component';
+import { WarningComponent } from 'src/app/components/warning/warning.component';
+import { SuccessComponent } from './../../components/success/success.component';
 
 
 @NgModule({
@@ -26,6 +28,8 @@ import { RenameComponent } from './components/rename/rename.component';
     ShareDialogComponent,
     ChatComponent,
     RenameComponent,
+    WarningComponent,
+    SuccessComponent
   ],
   imports: [
     CommonModule,

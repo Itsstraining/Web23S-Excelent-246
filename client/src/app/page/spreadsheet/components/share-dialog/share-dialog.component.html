@@ -22,14 +22,12 @@
             <p class="email">{{user.email}}</p>
           </div>
         </div>
-        <div *ngIf="(this.invites$| async)?.loading == true" (click)="sendInvite(this.user,user)" class="invite">
-          <app-loading></app-loading>
-        </div>
-        <div *ngIf="(this.invites$ | async)?.loading == false" (click)="sendInvite(this.user,user)" class="invite">
+        <div (click)="sendInvite(user)" class="invite">
           <span class="material-symbols-outlined">
             send
           </span>
         </div>
+        
       </div>
     </div>
 

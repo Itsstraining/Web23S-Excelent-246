@@ -12,18 +12,21 @@ export class InvitationService {
 
 
     async send(invitation: Invitation, idReceiver: string) {
-        if(invitation.to == idReceiver) {
-            return{
-                message: 'The user is already a member of the file',
-            }
+        let file = await this.fileService.getById(invitation.fileId);
+        let index = file.members.findIndex((ele) => ele == idReceiver);
+        if(index == -1){
+            let createdInvitation = new this.invitationModel(invitation);
+            console.log(createdInvitation);
+            return await createdInvitation.save();
+        }else{
+            return;
         }
-        let createdInvitation = new this.invitationModel(invitation);
-        console.log(createdInvitation);
-        return await createdInvitation.save();
+        
     }
 
-    async getInvitations(id: string) {
-        return await this.invitationModel.find({to: id});
+    async getInvitations(id: string) : Promise<Invitation[]>{
+        let result = await this.invitationModel.find({to: id});
+        return result as Invitation[];
     }
 
 

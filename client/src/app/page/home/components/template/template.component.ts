@@ -56,12 +56,126 @@ export class TemplateComponent {
       modifiedBy: '',
       createdBy: this.currentUser.userName!,
       status: "private",
-      data: {},
+      data: {
+        "jsonObject": {
+            "Workbook": {
+                "allowInsert": true,
+                "allowCellFormatting": true,
+                "showFormulaBar": true,
+                "allowHyperlink": true,
+                "locale": "en-US",
+                "selectionSettings": {
+                    "mode": "Multiple"
+                },
+                "enableKeyboardNavigation": true,
+                "filterCollection": [],
+                "height": "100%",
+                "sheets": [
+                    {
+                        "frozenRows": 0,
+                        "usedRange": {
+                            "rowIndex": 0,
+                            "colIndex": 2
+                        },
+                        "index": 0,
+                        "columns": [
+                            {},
+                            null,
+                            {}
+                        ],
+                        "topLeftCell": "A1",
+                        "selectedRange": "C1:C1",
+                        "isProtected": false,
+                        "rowCount": 100,
+                        "state": "Visible",
+                        "paneTopLeftCell": "A1",
+                        "rows": [],
+                        "frozenColumns": 0,
+                        "activeCell": "C1",
+                        "showGridLines": true,
+                        "showHeaders": true,
+                        "colCount": 100,
+                        "protectSettings": {
+                            "selectCells": false,
+                            "formatRows": false,
+                            "formatColumns": false,
+                            "selectUnLockedCells": false,
+                            "formatCells": false,
+                            "insertLink": false
+                        },
+                        "name": "Sheet1"
+                    }
+                ],
+                "enableRtl": false,
+                "allowNumberFormatting": true,
+                "sortCollection": [],
+                "enablePersistence": false,
+                "allowFreezePane": true,
+                "allowSorting": true,
+                "allowFiltering": true,
+                "openUrl": "https://ej2services.syncfusion.com/production/web-services/api/spreadsheet/open",
+                "showAggregate": true,
+                "allowEditing": true,
+                "enableContextMenu": true,
+                "isProtected": false,
+                "allowOpen": true,
+                "allowResizing": true,
+                "allowScrolling": true,
+                "showRibbon": true,
+                "cssClass": "",
+                "autoFillSettings": {
+                    "showFillOptions": true
+                },
+                "allowMerge": true,
+                "enableClipboard": true,
+                "allowWrap": true,
+                "showSheetTabs": true,
+                "allowSave": true,
+                "cellStyle": {
+                    "border": "",
+                    "fontFamily": "Calibri",
+                    "color": "#000000",
+                    "fontWeight": "normal",
+                    "textIndent": "0pt",
+                    "textDecoration": "none",
+                    "borderBottom": "",
+                    "borderLeft": "",
+                    "borderRight": "",
+                    "borderTop": "",
+                    "fontStyle": "normal",
+                    "backgroundColor": "#ffffff",
+                    "verticalAlign": "bottom",
+                    "fontSize": "11pt",
+                    "textAlign": "left"
+                },
+                "allowFindAndReplace": true,
+                "allowImage": true,
+                "scrollSettings": {
+                    "enableVirtualization": true,
+                    "isFinite": false
+                },
+                "allowChart": true,
+                "allowAutoFill": true,
+                "width": "100%",
+                "allowDelete": true,
+                "saveUrl": "https://ej2services.syncfusion.com/production/web-services/api/spreadsheet/save",
+                "allowDataValidation": true,
+                "enableKeyboardShortcut": true,
+                "activeSheetIndex": 0,
+                "allowConditionalFormat": true,
+                "password": "",
+                "allowUndoRedo": true,
+                "definedNames": []
+            }
+        }
+    },
       members:[],
-  };
+    };
     this.fileService.currentFile = fileToCreate;
     this.store.dispatch(FileActions.createFile({ file: fileToCreate }));
     this.store.dispatch(FileActions.createFileSuccess({ file: this.fileService.currentFile }));
-    this.router.navigate(['/spreadsheet', this.fileService.currentFile.fileId]);
+    setTimeout(() => {
+      this.router.navigate(['/spreadsheet', this.fileService.currentFile.fileId]);
+    },1000)
   }
 }
