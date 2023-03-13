@@ -170,7 +170,6 @@ export class SpreadsheetComponent implements OnInit {
         // console.log(model);
         this.spreadsheetObj.updateAction(model);
         }else{
-          
         } 
     }})
   }

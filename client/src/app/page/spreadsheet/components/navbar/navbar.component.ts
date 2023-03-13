@@ -2,7 +2,7 @@ import { ChatService } from 'src/app/service/chat.service';
 import { AuthState } from './../../../../../ngrx/states/auth.states';
 import { ShareDialogComponent } from './../share-dialog/share-dialog.component';
 import { MenuItemModel } from './../../../../../../node_modules/@syncfusion/ej2-navigations/src/common/menu-base-model.d';
-import { Component, ElementRef, ViewChild, HostListener, Input, EventEmitter, OnInit } from '@angular/core';
+import { Component, ElementRef, ViewChild, HostListener, Input, EventEmitter, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/service/auth.service';
 import { MenuEventArgs } from '@syncfusion/ej2-navigations';
@@ -27,7 +27,7 @@ import { throwDialogContentAlreadyAttachedError } from '@angular/cdk/dialog';
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss'],
 })
-export class NavbarComponent implements OnInit{
+export class NavbarComponent implements OnInit, OnDestroy{
   public isEditing: boolean;
   public pendingValue!: string;
   public title = '';
@@ -60,15 +60,16 @@ export class NavbarComponent implements OnInit{
     // this.store.dispatch(FileActions.getFilesByUserId({ userId: this.user.userId! }));
 
     console.log(this.fileService.idParam!)
-
+    this.socket.connect()
     try{
       setTimeout(() => {
-        this.join(this.fileService.idParam!,this.user!);
+      this.join(this.fileService.idParam!,this.user!);
       this.watchRoom = this.watchRoomChange().subscribe((data:any) => {
         // this.users
         data.users.forEach((user:any) => {
           this.users.push(user.userInfo)
           this.chatService.participators.push(user.userInfo);
+          console.log(user.userInfo);
           // console.log(user.userInfo)
         })
         this.users.forEach((ele) => {
@@ -133,6 +134,18 @@ export class NavbarComponent implements OnInit{
     'Customize',
     'Options',
   ];
+
+  ngOnDestroy() :void{
+    let index = this.users.findIndex((res) => res.userId == this.user.userId)
+    if(index == 1){
+      this.users.splice(index,1);
+    }
+    console.log(this.users);
+    this.leave(this.fileService.idParam!, this.user);
+    // this.socket.disconnect();
+    this.watchRoom.unsubscribe();
+    console.log(this.users);
+  }
 
   menuItems: MenuItemModel[] | any = [
     {
@@ -228,6 +241,7 @@ export class NavbarComponent implements OnInit{
       fileId: fileId,
       user: user
     }
+    // console.log('leave', fileId);
     this.socket.emit('leaveRoom', payload);
   }
 

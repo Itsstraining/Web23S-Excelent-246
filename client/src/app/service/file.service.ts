@@ -54,6 +54,10 @@ export class FileService {
     return this.socket.fromEvent(channel);
   }
 
+  leaveRoom(){
+    // this.socket.emit('');
+  }
+
   sendDataByFileId(fileId: string, data: any){
     this.socket.emit('message', {fileId: fileId, data: data});
     console.log(data);
