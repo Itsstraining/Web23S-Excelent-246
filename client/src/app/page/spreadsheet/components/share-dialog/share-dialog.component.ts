@@ -12,6 +12,7 @@ import { Timestamp } from 'firebase/firestore';
 import { FileActions } from 'src/ngrx/actions/file.actions';
 import { FileState } from 'src/ngrx/states/file.states';
 import { FileService } from 'src/app/service/file.service';
+import {LoadingComponent} from '../../../../components/loading/loading.component'
 @Component({
   selector: 'app-share-dialog',
   templateUrl: './share-dialog.component.html',
@@ -27,7 +28,7 @@ export class ShareDialogComponent {
   invites$!: Observable<InvitationState>
   files$!: Observable<FileState>
   filterItem: User[] = [];
-  allItems: Array<User> = []
+  allItems: Array<User> = [];
   constructor(private store: Store<{ auth: AuthState, invite: InvitationState, file: FileState }>, private route: ActivatedRoute,
     private fileService: FileService) {
       this.files$ = this.store.select('file');
@@ -37,12 +38,9 @@ export class ShareDialogComponent {
         console.log(data.file);
         this.fileName = data.file?.title!;
         console.log(this.fileName);
+        
         }
     })
-    // this.route.paramMap.subscribe(params => {
-    //   this.idParam = params.get('id');
-    //   console.log(this.idParam);
-    // }); 
     this.users$ = this.store.select('auth');
     this.store.dispatch(AuthActions.getAllUsers());
     this.users$.subscribe((data) => {
@@ -52,12 +50,8 @@ export class ShareDialogComponent {
         this.allItems = data.users;
         this.filterItem = data.users;
       }
-    
     })
-
-
   }
-  //searchItemByKeyword
   searchItemByKeyword(event: any) {
     if (event.target.value.trim() == '') {
       this.filterItem = this.allItems;
@@ -72,8 +66,6 @@ export class ShareDialogComponent {
   }
 
   sendInvite(creator: User, receiver: User) {
-    // let fileName = '';
-    
     console.log(this.fileService.idParam);
     if(this.fileService.idParam!=null){
       let invitation:Invitation = {

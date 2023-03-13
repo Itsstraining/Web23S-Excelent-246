@@ -4,7 +4,7 @@
     <div class="left-side">
       <div class="left-side-content">
         <div class="logo">
-          <img [routerLink]="['/']" src="../../../../../assets/logo/E-logo.png" alt="logo" />
+          <img [routerLink]="['/home']" src="../../../../../assets/logo/E-logo.png" alt="logo" />
         </div>
         <div class="file-name-and-tools">
           <div class="file-name">
@@ -18,7 +18,7 @@
     <div class="right-side">
       <div class="right-side-content">
         <div  *ngFor="let user of this.users |slice:0:4" [matTooltip]="user.userName!" [matTooltipShowDelay]="500" style="display: flex; justify-content: center; align-items: center;">
-          <img *ngIf="user.userId != (this.auth$|async)?.user?.userId" [src]="(this.auth$|async)?.user?.photoURL" alt="user avatar" class="user-avatar">
+          <img *ngIf="user.userId != (this.auth$|async)?.user?.userId" [src]="(this.auth$|async)?.user?.photoURL" (error)="updateUrl($event)" alt="user avatar" class="user-avatar">
         </div>
         <div (click)="share()" class="share">
           Chia sẻ

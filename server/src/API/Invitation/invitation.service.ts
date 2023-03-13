@@ -12,11 +12,11 @@ export class InvitationService {
 
 
     async send(invitation: Invitation, idReceiver: string) {
-        // if(invitation.to == idReciever) {
-        //     return{
-        //         message: 'The user is already a member of the file',
-        //     }
-        // }
+        if(invitation.to == idReceiver) {
+            return{
+                message: 'The user is already a member of the file',
+            }
+        }
         let createdInvitation = new this.invitationModel(invitation);
         console.log(createdInvitation);
         return await createdInvitation.save();
