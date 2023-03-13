@@ -17,6 +17,7 @@ export class ChatComponent {
 
   chat$!: Observable<any>;
   messages: any[] = [];
+  // users: Array<any> = [];
 
   roomId: string = '';
   newMessage: string = '';
@@ -25,7 +26,7 @@ export class ChatComponent {
   user!:User; 
   sender = document.getElementById('send')! as HTMLElement;
 
-  constructor(private chatService: ChatService, private route: ActivatedRoute, private store: Store<{auth: AuthState}>){
+  constructor(protected chatService: ChatService, private route: ActivatedRoute,private store: Store<{auth: AuthState}>){
     this.auth$ = this.store.select('auth');
     this.auth$.subscribe((res) => {
       this.user = res.user!;
@@ -43,7 +44,7 @@ export class ChatComponent {
       console.log('Already joined in: ', this.roomId);
       this.chat$ = this.chatService.getMessageByRoomId(this.roomId);
       this.chat$.subscribe((message: any) => {this.messages.push(message)});
-
+      
   }
   sendMessage(message: string ){
     let newMessageData: ChatModel = {

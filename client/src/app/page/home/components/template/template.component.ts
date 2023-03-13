@@ -170,12 +170,13 @@ export class TemplateComponent {
         }
     },
       members:[],
-    };
+  };
+
     this.fileService.currentFile = fileToCreate;
     this.store.dispatch(FileActions.createFile({ file: fileToCreate }));
     this.store.dispatch(FileActions.createFileSuccess({ file: this.fileService.currentFile }));
-    setTimeout(() => {
-      this.router.navigate(['/spreadsheet', this.fileService.currentFile.fileId]);
-    },1000)
+    
+    this.router.navigate(['/spreadsheet', fileToCreate.fileId]);
+    
   }
 }

@@ -67,13 +67,15 @@
 ></app-wellcome>
 <div
   infiniteScroll
-  [infiniteScrollDistance]="1"
+  [infiniteScrollDistance]="3"
   [infiniteScrollThrottle]="50"
   (scrolled)="onScrollDown($event)"
   class="divTo"
   *ngIf="(this.files$ | async)?.loading == false "
 >
-  <div *ngFor="let f1 of (this.files$ | async)?.files" class="divToVua">
+  <!-- <div *ngFor="let f1 of (this.files$ | async)?.files " class="divToVua"> -->
+  <div *ngFor="let f1 of this.arr " class="divToVua">
+
     <img
       class="histories-contents-file-logo"
       src="../../../../../assets/logo/E-logo.png"

@@ -13,8 +13,8 @@
     <img src="../../../../../assets/messenger.png" alt="message">
   </label>
   <div class="wrapper">
-    <div class="chat-info">
-
+    <div class="chat-info" *ngFor="let user of this.chatService.participators |slice:0:4" [matTooltip]="user.userName!" [matTooltipShowDelay]="500" style="display: flex; align-items: center;">
+      <img *ngIf="user.userId != (this.auth$|async)?.user?.userId" [src]="user?.photoURL" alt="user avatar" class="user-avatar">
     </div>
     <div class="message-container">
       <div *ngFor="let msg of messages" [class]="(msg.from == (this.auth$|async)?.user?.userId) ? 'card' : 'friend'">
@@ -22,6 +22,7 @@
         <img *ngIf="(msg.from != (this.auth$|async)?.user?.userId)" [src]="(this.auth$|async)?.user?.photoURL" alt="">
         <p>{{msg.msg}}</p>
         <img *ngIf="(msg.from == (this.auth$|async)?.user?.userId)" [src]="(this.auth$|async)?.user?.photoURL" alt="">
+
       </div>
      </div>
     <div class="send-message">

@@ -77,7 +77,10 @@ export class SpreadsheetComponent implements OnInit {
       this.FileService.currentFile = res.file;
       console.log(this.FileService.currentFile);
     })
+    
+
     this.openFile();
+    
 }
 
 
@@ -85,7 +88,10 @@ export class SpreadsheetComponent implements OnInit {
     setTimeout(() => {
       console.log(this.FileService.currentFile)
       this.spreadsheetObj.openFromJson({file: this.FileService.currentFile?.data.jsonObject});
+      
+
     },3000);
+    
   }
 
   ngOnInit(): void {

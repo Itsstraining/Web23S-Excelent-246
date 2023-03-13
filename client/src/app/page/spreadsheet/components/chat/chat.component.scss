@@ -1,39 +1,3 @@
-// .chat{
-//     // position: absolute;
-//     width: 3.9rem;
-//     height: 3.9rem;
-//     background-color: white;
-//     // left:114.2rem;
-//     // bottom: 5rem;
-//     // z-index: 10;
-//     border-radius: 50%;
-//     display: flex;
-//     justify-content: center;
-//     align-items: center;
-//     box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
-//     transition: 0.5s;
-// }
-
-// .chat:hover{
-//     transition: 0.5s;
-//     scale: 1.1;
-// }
-
-// .chat img{
-//     width: 80%;
-//     height: 80%;
-// }
-// .chatContainer{
-//     position: absolute;
-//     width: 18.5rem;
-//     height: 22rem;
-//     left:95rem;
-//     bottom: 5rem;
-//     background-color: blue;
-//     z-index: 10;
-// }
-
-
 .container{
   border-radius: 6px;
 }
@@ -42,7 +6,7 @@
   position: absolute;
   z-index: 10;
   left: 95%;
-  top: 84%;
+  top: 49.426rem;
   width: 3rem;
   height: 3rem;
   border-radius: 50%;
@@ -71,13 +35,13 @@ input[type="checkbox"]{
 
 .wrapper{
   position: absolute;
-  top: 36.5%;
-  left: 73.5%;
+  top: 26.426rem;
+  left: 91.765rem;
   z-index: 10;
   width: 20rem;
   height: 23rem;
   margin: 80px auto;
-  background-color: white;
+  background-color: #f8f9fa;
   box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
   // background: #E11E5D;
   border-radius: 6px;
@@ -89,29 +53,49 @@ input[type="checkbox"]{
   display: none;
 }
 
+.chat-info img{
+  padding:0.4rem;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  background-color: #e3165b;
+  z-index: 1;
+}
+
+
 .chat-info{
   width: 100%;
-  height: 10%;
+  height: 12%;
   border-start-end-radius: 6px;
   border-start-start-radius: 6px;
+  position: absolute;
+  background-color: #e3165b;
 }
 
 .message-container{
+  font-size: 0.9rem;
   display: block;
   overflow-y: scroll;
   width: 100%;
   height: 80%;
+  word-wrap:break-word;
+  max-width: inherit;
+  margin-top: 2.8rem;
+  z-index: 1;
 }
 
 .message-container img{
-  width: 1rem;
-  height: 1rem;
+  width: 2.2rem;
+  height: 2.2rem;
   border-radius: 50%;
+
 }
 
 .message-container p{
   padding: 0;
   margin: 0;
+  max-width: inherit;
+  padding: 0 0.2rem 0 0.3rem;
 }
 
 .send-message{
@@ -150,13 +134,15 @@ input[type="checkbox"]{
   float: right;
   // padding: 5px;
   border-radius: 10px;
-  background-color: aliceblue;
+  background-color: #e3165b;
+  color: #f8f9fa;
   width: fit-content;
   height: auto;
   display: flex;
   justify-content: flex-end;
   align-items: center;
   margin-top: 0.5rem;
+  
 }
 .friend {
   min-width: fit-content;
@@ -165,7 +151,7 @@ input[type="checkbox"]{
   float: left;
   // padding: 5px;
   border-radius: 10px;
-  background-color: rgb(240, 255, 247);
+  background-color: rgb(217 217 217 / 76%);
   width: fit-content;
   display: flex;
   height: auto;
