@@ -53,6 +53,10 @@ export class ChatComponent {
       date: Date.now(),
       from: this.user.userId!,
       fromURL: this.user.photoURL!,
+
+    }
+    if(message == ''){
+      return;
     }
     this.chatService.sendMessageByRoom(newMessageData);
     this.newMessage = '';
@@ -66,7 +70,10 @@ export class ChatComponent {
       from: this.user.userId!,
       fromURL: this.user.photoURL!,
     }
-    if(event.key ==  'Enter'){
+    if(message == ''){
+      return;
+    }
+    if(event.key ==  'Enter' ){
       this.chatService.sendMessageByRoom(newMessageData);
       this.newMessage = '';
     }

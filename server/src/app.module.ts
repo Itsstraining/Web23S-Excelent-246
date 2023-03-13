@@ -8,6 +8,7 @@ import { FileService } from './API/file/file.service';
 import { InvitationModule } from './api/invitation/invitation.module';
 import { ChatGateway } from './chat/chat.gateway';
 import { FileGateway } from './file/file.gateway';
+import { RoomService } from './api/room/room.service';
 
 
 
