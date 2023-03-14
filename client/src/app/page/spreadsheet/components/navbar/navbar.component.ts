@@ -43,7 +43,7 @@ export class NavbarComponent implements OnInit, OnDestroy{
     protected fileService: FileService,
     private store: Store<{ file: FileState, auth: AuthState }>, private socket: Socket, private chatService: ChatService, private route: ActivatedRoute) {
     // this.pendingValue = this.fileService.currentFile.title!;
-    this.pendingValue = JSON.parse(localStorage.getItem('currentFile')!).title;
+    this.title = JSON.parse(localStorage.getItem('currentFile')!).title;
 
 
     // console.log(this.fileService.currentFile.ownerId)
@@ -60,8 +60,8 @@ export class NavbarComponent implements OnInit, OnDestroy{
       this.fileService.idParam = params.get('id')!;
       // console.log(this.FileService.idParam);
     });
-    this.store.dispatch(FileActions.getFilesByUserId({ userId: JSON.parse(localStorage.getItem('idParam')!) }));
-    // this.store.dispatch(FileActions.getFilesByUserId({ userId: this.user.userId! }));
+    // this.store.dispatch(FileActions.getFilesByUserId({ userId: JSON.parse(localStorage.getItem('idParam')!) }));
+    this.store.dispatch(FileActions.getFileById({ fileId: this.idParam }));
 
     console.log(this.fileService.idParam!)
     this.socket.connect()

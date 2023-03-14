@@ -10,6 +10,7 @@ import { FileState } from 'src/ngrx/states/file.states';
 import { User } from 'src/app/model/user.model';
 import {File} from 'src/app/model/file.model'
 import { Timestamp } from '@angular/fire/firestore';
+import { Socket } from 'ngx-socket-io';
 
 @Component({
   selector: 'app-template',
@@ -25,7 +26,8 @@ export class TemplateComponent {
 
     protected fileService: FileService,
     private store: Store<{ auth: AuthState; file: FileState }>,
-    private router: Router
+    private router: Router,
+    private socket: Socket
   ) {
     this.user$ = this.store.select('auth');
     this.user$.subscribe((user) => {
@@ -172,11 +174,32 @@ export class TemplateComponent {
       members:[],
   };
 
+    // this.join(fileToCreate.fileId, this.currentUser);
+    this.watchRoomChange();
+
     this.fileService.currentFile = fileToCreate;
     this.store.dispatch(FileActions.createFile({ file: fileToCreate }));
     this.store.dispatch(FileActions.createFileSuccess({ file: this.fileService.currentFile }));
     
     this.router.navigate(['/spreadsheet', fileToCreate.fileId]);
-    
+  }
+
+
+  join(fileId: string, user: User){
+    let payload = {
+      fileId: fileId,
+      user: user
+    }
+    // console.log('join' + payload.fileId);
+    this.socket.emit('joinRoom', payload);
+  }
+
+  watchRoomChange() {
+    return new Observable((observer) => {
+      this.socket.on('update-room', (data: any) => {
+        console.log(data);
+        observer.next(data);
+      })
+    })
   }
 }
