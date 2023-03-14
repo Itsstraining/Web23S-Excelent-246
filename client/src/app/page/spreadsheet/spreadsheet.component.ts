@@ -66,7 +66,7 @@ export class SpreadsheetComponent implements OnInit {
       this.id = auth.user?.userId || 'kh co user';
     });
     this.file$ = this.store.select('file');
-    this.store.dispatch(FileActions.getFilesByUserId({userId: this.id!}));
+    // this.store.dispatch(FileActions.getFilesByUserId({userId: this.id!}));
     this.route.paramMap.subscribe(params => {
       this.idParam = params.get('id')!;
       this.FileService.idParam = params.get('id')!;
@@ -75,7 +75,7 @@ export class SpreadsheetComponent implements OnInit {
     this.store.dispatch(FileActions.getFileById({fileId: this.FileService.idParam!}));
     this.file$.subscribe((res) => {
       this.FileService.currentFile = res.file;
-      console.log(this.FileService.currentFile);
+      // console.log(this.FileService.currentFile);
     })
     
 

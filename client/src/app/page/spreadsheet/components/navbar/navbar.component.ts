@@ -3,7 +3,7 @@ import { AuthState } from './../../../../../ngrx/states/auth.states';
 import { ShareDialogComponent } from './../share-dialog/share-dialog.component';
 import { MenuItemModel } from './../../../../../../node_modules/@syncfusion/ej2-navigations/src/common/menu-base-model.d';
 import { Component, ElementRef, ViewChild, HostListener, Input, EventEmitter, OnInit, OnDestroy } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { AuthService } from 'src/app/service/auth.service';
 import { MenuEventArgs } from '@syncfusion/ej2-navigations';
 // import { MenuClickEventArgs } from '@syncfusion/ej2-angular-filemanager';
@@ -18,8 +18,6 @@ import { User } from 'src/app/model/user.model';
 import { AuthActions } from 'src/ngrx/actions/auth.actions';
 import { Socket } from 'ngx-socket-io';
 
-import { RenameComponent } from '../rename/rename.component';
-import { throwDialogContentAlreadyAttachedError } from '@angular/cdk/dialog';
 
 
 @Component({
@@ -39,10 +37,11 @@ export class NavbarComponent implements OnInit, OnDestroy{
   users: Array<any> = [];
   editable = false;
   newName = '';
+  idParam!: string;
   constructor(private eRef: ElementRef, private router: Router,
     protected authService: AuthService, private dailog: MatDialog,
     protected fileService: FileService,
-    private store: Store<{ file: FileState, auth: AuthState }>, private socket: Socket, private chatService: ChatService) {
+    private store: Store<{ file: FileState, auth: AuthState }>, private socket: Socket, private chatService: ChatService, private route: ActivatedRoute) {
     // this.pendingValue = this.fileService.currentFile.title!;
     this.pendingValue = JSON.parse(localStorage.getItem('currentFile')!).title;
 
@@ -56,6 +55,11 @@ export class NavbarComponent implements OnInit, OnDestroy{
       this.user = res.user!;
       // console.log(this.user);
     })
+    this.route.paramMap.subscribe(params => {
+      this.idParam = params.get('id')!;
+      this.fileService.idParam = params.get('id')!;
+      // console.log(this.FileService.idParam);
+    });
     this.store.dispatch(FileActions.getFilesByUserId({ userId: JSON.parse(localStorage.getItem('idParam')!) }));
     // this.store.dispatch(FileActions.getFilesByUserId({ userId: this.user.userId! }));
 
@@ -63,18 +67,17 @@ export class NavbarComponent implements OnInit, OnDestroy{
     this.socket.connect()
     try{
       setTimeout(() => {
-      this.join(this.fileService.idParam!,this.user!);
+      this.join(this.fileService.idParam,this.user!);
       this.watchRoom = this.watchRoomChange().subscribe((data:any) => {
         // this.users
-        data.users.forEach((user:any) => {
-          this.users.push(user.userInfo)
-          this.chatService.participators.push(user.userInfo);
-          console.log(user.userInfo);
-          // console.log(user.userInfo)
-        })
-        this.users.forEach((ele) => {
-          console.log(ele.userId);
-        } )
+        if(data.users){
+          this.chatService.participators = data.users;
+          console.log(chatService.participators);
+          let temp = data.users.filter((user:any) => user.userInfo.userId != this.user.userId);
+          console.log(temp);
+          this.users = temp;
+          
+        }
       })},2000)
 
     }
@@ -85,6 +88,9 @@ export class NavbarComponent implements OnInit, OnDestroy{
   }
 
   ngOnInit(): void {
+    setTimeout(() => {
+      this.store.dispatch(FileActions.getFilesByUserId({ userId: this.user.userId!}));
+    },1000)
     // this.title = this.fileService.currentFile.title!;
     // console.log(this.fileService.currentFile)
     // console.log(this.fileService.idParam);
@@ -136,14 +142,9 @@ export class NavbarComponent implements OnInit, OnDestroy{
   ];
 
   ngOnDestroy() :void{
-    let index = this.users.findIndex((res) => res.userId == this.user.userId)
-    if(index == 1){
-      this.users.splice(index,1);
-    }
-    console.log(this.users);
+
     this.leave(this.fileService.idParam!, this.user);
-    // this.socket.disconnect();
-    this.watchRoom.unsubscribe();
+    this.watchRoomChange();
     console.log(this.users);
   }
 
@@ -247,7 +248,8 @@ export class NavbarComponent implements OnInit, OnDestroy{
 
   watchRoomChange() {
     return new Observable((observer) => {
-      this.socket.on('join', (data: any) => {
+      this.socket.on('update-room', (data: any) => {
+        console.log(data);
         observer.next(data);
       })
     })

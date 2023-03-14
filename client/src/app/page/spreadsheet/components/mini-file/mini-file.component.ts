@@ -18,6 +18,7 @@ export class MiniFileComponent {
   userId!:string | null;
   files$:Observable<FileState>;
   auth$ = this.store.select('auth');
+  filesToOpen!: File[];
   constructor(private fileService: FileService, private store: Store<{auth:AuthState, file: FileState}>, private router: Router, private dialog: MatDialog) {
     this.auth$.subscribe((res) => {
       this.userId = res.user?.userId!;
@@ -25,7 +26,10 @@ export class MiniFileComponent {
     this.files$ = this.store.select('file');
     // this.store.dispatch(FileActions.getFilesByUserId({ userId: this.userId! }));
     this.files$.subscribe((res) => {
-      console.log(res.files); 
+      if(res){
+        this.filesToOpen = res.files.filter((file) => file.fileId != this.fileService.idParam);
+        console.log(res.files); 
+      }
     })
   }
 
