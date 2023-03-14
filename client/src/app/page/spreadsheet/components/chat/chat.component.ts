@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
@@ -12,7 +12,7 @@ import { AuthState } from 'src/ngrx/states/auth.states';
   templateUrl: './chat.component.html',
   styleUrls: ['./chat.component.scss']
 })
-export class ChatComponent {
+export class ChatComponent implements OnInit{
   title = 'client';
 
   chat$!: Observable<any>;
@@ -25,6 +25,7 @@ export class ChatComponent {
   auth$!: Observable<AuthState>;
   user!:User; 
   sender = document.getElementById('send')! as HTMLElement;
+  prevChat$!: Observable<any>;
 
   constructor(protected chatService: ChatService, private route: ActivatedRoute,private store: Store<{auth: AuthState}>){
     this.auth$ = this.store.select('auth');
@@ -38,6 +39,13 @@ export class ChatComponent {
     setTimeout(() => {
       this.joinRoom();
     },1500)
+  }
+
+  ngOnInit(){
+    this.prevChat$ = this.chatService.getPrevMessagesByRoomId(this.roomId);
+    this.prevChat$.subscribe((res:any) => {
+      this.messages = res;
+    })
   }
 
   joinRoom(){

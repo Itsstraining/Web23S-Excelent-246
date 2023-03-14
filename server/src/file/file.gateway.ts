@@ -53,6 +53,7 @@ export class FileGateway{
     }else{
       this.rooms[room].users.push({userInfo:payload.user,socketId:client.id});
     }
+    console.log("join room: " + this.rooms[room])
     console.log(this.rooms[room])
     this.server.emit('update-room',this.rooms[room]);
   }
@@ -69,6 +70,7 @@ export class FileGateway{
         this.rooms[room].users.splice(user,1);
       }
     }
+    console.log("out room: " + this.rooms[room])
     console.log(this.rooms[room])
     this.server.emit('update-room',this.rooms[room]);
   }

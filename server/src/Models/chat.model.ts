@@ -1,6 +1,7 @@
 export class ChatMode{
-    from: string;
-    msg: string;
+    roomId:string;
+    msg:string;
     date: number;
-    room: string;
+    from: string;
+    fromURL: string;
 }

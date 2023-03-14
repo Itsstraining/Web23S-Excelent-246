@@ -122,7 +122,7 @@ export class FileService {
   exportFile(spreadsheet: Spreadsheet, file: File, name: string){
     console.log(file);
     spreadsheet.save({
-      url:'https://ej2services.syncfusion.com/production/web-services/api/spreadsheet/save',
+      // url:'https://ej2services.syncfusion.com/production/web-services/api/spreadsheet/save',
       fileName: name,
       saveType: 'Xlsx',
     })
