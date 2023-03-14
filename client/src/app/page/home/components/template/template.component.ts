@@ -38,12 +38,12 @@ export class TemplateComponent {
   }
 
   templates = [
-    { name: 'Empty' },
-    { name: 'Monthly budget' },
-    { name: 'Annual budget' },
-    { name: 'To-do list' },
-    { name: 'Investment tracker' },
-    { name: 'Work schedule' },
+    { name: 'Empty' , span: '+', value: 'true'},
+    { name: 'Monthly budget' ,img: 'https://ssl.gstatic.com/docs/templates/thumbnails/1Db6sfBIFIJ45O-WxrH3_7auMPpiZ8wMc-sqCVjaLJgo_400.png', value: 'false'},
+    { name: 'Annual budget' ,img: 'https://ssl.gstatic.com/docs/templates/thumbnails/1-G94ItToCkCf34aBAjD5gnJb86N5viFUeerMi-xpWdw_400.png', value: 'false'},
+    { name: 'To-do list' ,img: 'https://ssl.gstatic.com/docs/templates/thumbnails/18CjGVazKR_Emu6CNy0JHCQBaQuL4RfculNG3kepFCDU_400_2.png' , value: 'false'},
+    { name: 'Investment tracker' ,img: 'https://ssl.gstatic.com/docs/templates/thumbnails/1N7-yV4TzDTYO1EN14tPR8GOKsx_GpQ_ufvH9f33uQpA_400.png', value: 'false'},
+    { name: 'Work schedule' ,img: 'https://ssl.gstatic.com/docs/templates/thumbnails/1lNgQBSI7GtfaRFku1w-W4rqRqf_XuYPBUbXlOwdz_BA_400.png', value: 'false'},
   ];
 
   startNewFile() {

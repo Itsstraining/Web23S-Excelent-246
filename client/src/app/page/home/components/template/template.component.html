@@ -1,15 +1,17 @@
 <div class="templates-contain">
   <div class="template-top">
-    <span>Start a new sheet</span>
+    <span class="template-top-start">Start a new sheet</span>
     <div>
-      <span>Template library</span>
-      <img class="logos" src="../../../assets/home_logos/updown.png" />
+      <span class="
+      template-top-library">Template library</span>
+    
     </div>
   </div>
   <div class="template-bottom">
-    <div *ngFor="let a of templates">
-      <p (click)="startNewFile()" class="background">
-        <img (click)="startNewFile()" class="pic" src="../../../assets/home_logos/microsoft-excel-logo.png"/>
+    <div *ngFor="let a of templates  ; let i = index">
+      <p  (click)="startNewFile()" class="background">
+        <span  class="create-file">{{a.span}}</span>
+        <img *ngIf="i!=0"  class="pic" [src]="a.img">
       </p>
       <p class="title">{{ a.name }}</p>
     </div>
