@@ -1,5 +1,6 @@
 import { SubscribeMessage, WebSocketGateway, WebSocketServer } from '@nestjs/websockets';
 import { Server, Socket } from 'socket.io';
+import { FileService } from 'src/API/file/file.service';
 import { AuthModel } from 'src/Models/auth.model';
 
 
