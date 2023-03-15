@@ -22,6 +22,7 @@ import { Observable } from 'rxjs';
 //SocketIO
 import {Socket} from 'ngx-socket-io'
 import { getFirestore } from 'firebase/firestore';
+import { User } from '../model/user.model';
 
 @Injectable({
   providedIn: 'root',
@@ -34,6 +35,7 @@ export class FileService {
   currentFile!: any;
   isSelected!: boolean;
   spreadsheet!: Spreadsheet;
+  totalUsers!: any[];
   // so:Socket = this.socket;
 
   db = collection(this.fireStore, 'excelFiles');
@@ -120,7 +122,7 @@ export class FileService {
   exportFile(spreadsheet: Spreadsheet, file: File, name: string){
     console.log(file);
     spreadsheet.save({
-      url:'https://ej2services.syncfusion.com/production/web-services/api/spreadsheet/save',
+      // url:'https://ej2services.syncfusion.com/production/web-services/api/spreadsheet/save',
       fileName: name,
       saveType: 'Xlsx',
     })

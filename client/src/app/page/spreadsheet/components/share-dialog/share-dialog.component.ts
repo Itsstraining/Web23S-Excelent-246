@@ -37,7 +37,7 @@ export class ShareDialogComponent {
     private fileService: FileService) {
       this.files$ = this.store.select('file');
       this.invites$ = this.store.select('invite');
-      this.store.dispatch(FileActions.getFileById({ fileId: this.fileService.idParam! }));
+      // this.store.dispatch(FileActions.getFileById({ fileId: this.fileService.idParam! }));
       this.files$.subscribe((data) => {
       if(data.loading == false){
         this.currentFile = data.file!;

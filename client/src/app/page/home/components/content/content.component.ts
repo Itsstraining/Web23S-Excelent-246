@@ -32,21 +32,18 @@ export class ContentComponent implements OnInit {
   ) {
     this.auth$ = this.store.select('auth');
     this.files$ = this.store.select('file');
-    this.auth$.subscribe((res) => {
-      
-        // console.log(this.fileService.currentUserId)
-        // this.userId = this.fileService.currentUserId;
-        // console.log(this.userId);
+    this.files$.subscribe((data) => {
+      this.arr = data.files.slice(0, 12);
+      this.arr2 = data.files;
     });
     this.store.dispatch(FileActions.getFilesByUserId({ userId: localStorage.getItem('userId')! }));
-    // this.appendItems();
   }
 
   ngOnInit() {
-    this.files$.subscribe((data) => {
-      this.arr = data.files.slice(0, 8);
-      this.arr2 = data.files;
-    });
+    // this.files$.subscribe((data) => {
+    //   this.arr = data.files.slice(0, 12);
+    //   this.arr2 = data.files;
+    // });
   }
 
   selectFile(fileId: string) {
@@ -58,7 +55,6 @@ export class ContentComponent implements OnInit {
       localStorage.setItem('currentFile', JSON.stringify(res.file))
       localStorage.setItem('idParam', JSON.stringify(res.file?.fileId))
     })
-    // console.log(file);
     setTimeout(() => {
       this.route.navigate([`/spreadsheet/${fileId}`]);
     },1500)
@@ -69,6 +65,11 @@ export class ContentComponent implements OnInit {
     else return false;
   }
 
+  
+  canDelete(ownerId: string){
+    if (ownerId == localStorage.getItem('userId')) return true;
+    else return false;
+  }
   deleleFile(fileId: string) {
     this.store.dispatch(FileActions.deleteFile({ fileId: fileId }));
   }
@@ -76,7 +77,12 @@ export class ContentComponent implements OnInit {
   openDialog() {
     this.dialog.open(RenameDialogComponent);
     
-    this.store.dispatch(FileActions.getFileById({ fileId: this.fileService.idToUpdate! }));
+// setTimeout(()=>{
+//   this.store.dispatch(FileActions.getFileById({ fileId: this.fileService.idToUpdate! }));
+
+// },3000)
+this.store.dispatch(FileActions.getFileById({ fileId: this.fileService.idToUpdate! }));
+
   }
 
   getId(fileId: string) {

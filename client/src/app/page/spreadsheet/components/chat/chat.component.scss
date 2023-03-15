@@ -5,8 +5,8 @@
 .show-btn {
   position: absolute;
   z-index: 10;
-  left: 95%;
-  top: 49.426rem;
+  left: 95.5%;
+  top: 52.426rem;
   width: 3rem;
   height: 3rem;
   border-radius: 50%;
@@ -35,12 +35,12 @@ input[type="checkbox"]{
 
 .wrapper{
   position: absolute;
-  top: 26.426rem;
-  left: 91.765rem;
+  top: 32.2rem;
+  left: 93.9rem;
   z-index: 10;
   width: 20rem;
-  height: 23rem;
-  margin: 80px auto;
+  height: 25rem;
+  // margin: 80px auto;
   background-color: #f8f9fa;
   box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
   // background: #E11E5D;
@@ -54,22 +54,26 @@ input[type="checkbox"]{
 }
 
 .chat-info img{
-  padding:0.4rem;
-  width: 2rem;
-  height: 2rem;
+  // margin: auto 0;
+  // padding: 0 0.3rem;
+  width: 1.8rem;
+  height: 1.8rem;
   border-radius: 50%;
-  background-color: #e3165b;
-  z-index: 1;
+  margin-left: 0.5rem;
+  // background-color: #e3165b;
+  // z-index: 1;
 }
 
 
 .chat-info{
   width: 100%;
-  height: 12%;
+  height: 10%;
   border-start-end-radius: 6px;
   border-start-start-radius: 6px;
-  position: absolute;
+  // position: absolute;
   background-color: #e3165b;
+  display: flex;
+  align-items: center;
 }
 
 .message-container{
@@ -80,8 +84,8 @@ input[type="checkbox"]{
   height: 80%;
   word-wrap:break-word;
   max-width: inherit;
-  margin-top: 2.8rem;
-  z-index: 1;
+  // margin-top: 2.8rem;
+  // z-index: 1;
 }
 
 .message-container img{
@@ -115,15 +119,17 @@ input[type="checkbox"]{
   border: none;
   outline: none !important;
   padding-left: 0.5rem;
+  font-size: small;
 }
+
 
 .send-message button{
   border: none;
-  width: 20%;
-  height: 90%;
+  width: 15%;
+  height: 75%;
   color: white;
   background-color: #e3165b;
-  font-weight: 600;
+  font-weight: 500;
   border-radius: 6px;
 }
 

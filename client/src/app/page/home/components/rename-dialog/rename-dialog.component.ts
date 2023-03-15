@@ -32,9 +32,18 @@ export class RenameDialogComponent {
     this.users$ = this.store.select('auth');
     this.users$.subscribe((data) => {
       this.user = data.user!;
-      console.log(data.user);
+      
     })
-    // this.store.dispatch(FileActions.getFilesByUserId({ userId: this.user.userId! }));
+      //  this.files$.subscribe((data) => {
+      //   console.log(data.file)
+      //     this.file = { ...data.file! };
+      //     // this.file.title = newName;
+      //     // this.file.createdBy = data.file?.createdBy!;
+      //     // this.file.createdDate = data.file?.createdDate!;
+      // });
+
+  
+    // console.log(this.file )
   }
 
   closeDialog() {
@@ -42,32 +51,37 @@ export class RenameDialogComponent {
   }
 
 
-  test() {
+  rename() {
+    // this.store.dispatch(FileActions.getFileById({ fileId: this.fileService.idToUpdate }));
     let newName = this.input.nativeElement.value;
+    if(newName != ''){
+      // this.file.title = newName;
+      
+      this.files$.subscribe((data) => {
+        console.log(data.file)
+          this.file = { ...data.file! };
+          // this.file.title = newName;
+          // this.file.createdBy = data.file?.createdBy!;
+          // this.file.createdDate = data.file?.createdDate!;
+      });
+  
+      this.store.dispatch(
+        FileActions.updateFile({
+          fileId: this.idToUpdate,
+          file: {
+            ...this.file,
+            title: newName,
+            // createdBy: this.file.createdBy,
+            // createdDate: this.file.createdDate,
+          },
+        })
+      );
+      
+    }
+    
+    console.log(this.file)
+    // this.store.dispatch(FileActions.getFileById({ fileId: this.fileService.idToUpdate! }));
 
-    this.files$.subscribe((data) => {
-      console.log(data.file);
-
-      // if (data.loading == false) {
-        this.file = { ...data.file! };
-        this.file.title = newName;
-        this.file.createdBy = data.file?.createdBy!;
-        this.file.createdDate = data.file?.createdDate!;
-      // }
-    });
-    console.log(this.file);
-
-    this.store.dispatch(
-      FileActions.updateFile({
-        fileId: this.idToUpdate,
-        file: {
-          ...this.file,
-          title: newName,
-          createdBy: this.file.createdBy,
-          createdDate: this.file.createdDate,
-        },
-      })
-    );
     this.dialogRef.close();
 
   }
