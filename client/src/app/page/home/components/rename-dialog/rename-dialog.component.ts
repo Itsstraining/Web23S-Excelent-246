@@ -15,13 +15,14 @@ import { User } from 'src/app/model/user.model';
   templateUrl: './rename-dialog.component.html',
   styleUrls: ['./rename-dialog.component.scss'],
 })
-export class RenameDialogComponent {
+export class RenameDialogComponent implements OnInit {
   files$!: Observable<FileState>;
   users$!: Observable<AuthState>;
   user!: User
   @ViewChild('inputId') input!: ElementRef;
   idToUpdate = this.fileService.idToUpdate;
   file!: File;
+  newName = '';
   constructor(
     public dialogRef: MatDialogRef<RenameDialogComponent>,
     private fileService: FileService,
@@ -32,42 +33,51 @@ export class RenameDialogComponent {
     this.users$ = this.store.select('auth');
     this.users$.subscribe((data) => {
       this.user = data.user!;
-      console.log(data.user);
+      // console.log(data.user);
     })
-    // this.store.dispatch(FileActions.getFilesByUserId({ userId: this.user.userId! }));
+    console.log(this.fileService.idToUpdate);
+
+
+  }
+
+  ngOnInit(): void {
+    
   }
 
   closeDialog() {
+
     this.dialogRef.close();
   }
 
 
   test() {
-    let newName = this.input.nativeElement.value;
+    this.newName = this.input.nativeElement.value;
+    
+    // setTimeout(() => {
+      this.store.dispatch(FileActions.getFileById({ fileId: this.fileService.idToUpdate}));
+      this.files$.subscribe((data) => {
+      this.file = {...data.file!}
+      console.log(this.file);
+      this.file.title = this.newName;
+      });
+    // },120)
 
-    this.files$.subscribe((data) => {
-      console.log(data.file);
+    // console.log(this.file);
 
-      // if (data.loading == false) {
-        this.file = { ...data.file! };
-        this.file.title = newName;
-        this.file.createdBy = data.file?.createdBy!;
-        this.file.createdDate = data.file?.createdDate!;
-      // }
-    });
-    console.log(this.file);
+    // setTimeout(() => {
 
-    this.store.dispatch(
-      FileActions.updateFile({
-        fileId: this.idToUpdate,
-        file: {
-          ...this.file,
-          title: newName,
-          createdBy: this.file.createdBy,
-          createdDate: this.file.createdDate,
-        },
-      })
-    );
+    // },500)
+    setTimeout(() =>{
+      this.store.dispatch(
+        FileActions.updateFile({
+          fileId: this.idToUpdate,
+          file: {
+            ...this.file,
+            title: this.newName,
+          },
+        })
+      );
+    },170)
     this.dialogRef.close();
 
   }
