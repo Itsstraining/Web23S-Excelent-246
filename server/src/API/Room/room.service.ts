@@ -2,8 +2,8 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { RoomModel } from 'src/models/room.model';
-import { AuthModel } from 'src/models/auth.model';
+import { RoomModel } from '../../Models/room.model';
+import { AuthModel } from 'src/Models/auth.model';
 import { Room, RoomDocument } from '../../schema/room.schema';
 
 @Injectable()
