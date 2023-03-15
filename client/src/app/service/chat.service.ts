@@ -18,12 +18,12 @@ export class ChatService {
   }
 
   getMessageByRoomId(roomId: string){
-    const channel = 'message-' + roomId;
+    const channel = 'mess-' + roomId;
     this.http.get(`${this.apiURL}/getOne/${roomId}`)
     return this.socket.fromEvent(channel);
   }
   sendMessageByRoom(data: ChatModel){
-    this.socket.emit('message',data);
+    this.socket.emit('mess',data);
     return this.http.post(`${this.apiURL}/send`, data);
   }
 }
