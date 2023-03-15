@@ -12,7 +12,7 @@ import { FileService } from '../file/file.service';
   ],
 
   controllers: [InvitationController],
-  providers: [InvitationService],
+  providers: [InvitationService, FileService],
 
 })
 export class InvitationModule {
