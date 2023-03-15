@@ -95,24 +95,31 @@
     </button>
     <mat-menu #menu="matMenu">
       <button
-        (click)="openDialog()"
+        onclick="openDialog()"
         mat-menu-item
         *ngIf="canRename(f1.ownerId) == false"
         disabled
       >
         <mat-icon>text_fields </mat-icon>
-
-        <span>Rename</span>
+        <span >Rename</span>
       </button>
       <button
         (click)="openDialog()"
+        
         mat-menu-item
         *ngIf="canRename(f1.ownerId) == true"
       >
         <mat-icon>text_fields</mat-icon>
         <span>Rename</span>
       </button>
-      <button mat-menu-item (click)="deleleFile(f1.fileId)">
+
+      <button mat-menu-item (click)="deleleFile(f1.fileId)" *ngIf="canDelete(f1.ownerId) == false"
+      disabled>
+        <mat-icon>delete_outline</mat-icon>
+        <span>Delete</span>
+      </button>
+
+      <button mat-menu-item (click)="deleleFile(f1.fileId)" *ngIf="canDelete(f1.ownerId) == true">
         <mat-icon>delete_outline</mat-icon>
         <span>Delete</span>
       </button>
