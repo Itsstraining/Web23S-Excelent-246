@@ -12,7 +12,7 @@ import { FileService } from "./file.service";
         FileController
     ],
     providers: [
-        FileService, FileGateway
+        FileGateway,FileService
     ],
 })
 

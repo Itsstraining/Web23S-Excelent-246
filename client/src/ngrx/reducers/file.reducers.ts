@@ -196,8 +196,8 @@ export const FileReducer = createReducer(
   on(FileActions.updateFile, (state,{fileId, file}) => {
     return {
       ...state,
-      inProcess: true,
-      loading: true,
+      inProcess: false,
+      loading: false,
       error: '',
     };
   }),
@@ -214,7 +214,7 @@ export const FileReducer = createReducer(
     return {
       ...state,
       files: newFiles,
-      // file: newFiles[index],
+      file: newFiles[index],
       inProcess: false,
       loading: false,
       error: '',
