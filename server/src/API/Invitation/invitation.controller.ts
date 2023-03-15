@@ -2,7 +2,6 @@ import { InvitationService } from './invitation.service';
 import { Body, Controller, Delete, Get, Param, Post, Put, Query } from '@nestjs/common';
 import { Invitation } from 'src/schema/invitation.schema';
 // import { FileModel } from 'src/Models/file.model';
-import { FileService } from '../File/file.service';
 
 @Controller('invitation')
 export class InvitationController {

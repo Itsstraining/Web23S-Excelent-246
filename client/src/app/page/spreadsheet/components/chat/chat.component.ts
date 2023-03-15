@@ -44,14 +44,17 @@ export class ChatComponent implements OnInit{
   ngOnInit(){
     this.prevChat$ = this.chatService.getPrevMessagesByRoomId(this.roomId);
     this.prevChat$.subscribe((res:any) => {
-      this.messages = res;
+      this.messages = res.filter(() => res != null);
     })
   }
 
   joinRoom(){
       console.log('Already joined in: ', this.roomId);
       this.chat$ = this.chatService.getMessageByRoomId(this.roomId);
-      this.chat$.subscribe((message: any) => {this.messages.push(message)});
+      this.chat$.subscribe((message: any) => {
+        this.messages.push(message)
+        console.log(message)  
+      });
       
   }
   sendMessage(message: string ){
@@ -70,7 +73,7 @@ export class ChatComponent implements OnInit{
     this.newMessage = '';
   }
 
-  send(message: string, event: any){
+  send(message: string){
     let newMessageData: ChatModel = {
       roomId: this.roomId,
       msg: message,
@@ -81,9 +84,10 @@ export class ChatComponent implements OnInit{
     if(message == ''){
       return;
     }
-    if(event.key ==  'Enter' ){
-      this.chatService.sendMessageByRoom(newMessageData);
-      this.newMessage = '';
-    }
+    // this.sender.addEventListener('keypress', (event) => {
+    //   if(event.key == 'Enter'){
+    //     this.chatService.sendMessageByRoom(newMessageData);
+    //   }
+    // })
   }
 }
