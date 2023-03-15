@@ -1,5 +1,5 @@
 <div class="container">
-    <div *ngFor="let dt of (this.files$ | async)?.files" class="example-card">
+    <div *ngFor="let dt of this.filesToOpen" class="example-card">
         <div>
             <div class="header">
                 <img (click)="getFileById(dt)" src="../../../../../assets/logo/logo2.png">

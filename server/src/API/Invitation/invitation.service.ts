@@ -3,7 +3,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { InvitationModel } from 'src/Models/invitation.model';
 import { Invitation, InvitationDocument } from 'src/schema/invitation.schema';
-import { FileService } from '../file/file.service';
+import { FileService } from '../../API/file/file.service';
 
 @Injectable()
 export class InvitationService {

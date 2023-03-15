@@ -13,21 +13,21 @@
     <img src="../../../../../assets/messenger.png" alt="message">
   </label>
   <div class="wrapper">
-    <div class="chat-info" *ngFor="let user of this.chatService.participators |slice:0:4" [matTooltip]="user.userName!" [matTooltipShowDelay]="500" style="display: flex; align-items: center;">
-      <img *ngIf="user.userId != (this.auth$|async)?.user?.userId" [src]="user?.photoURL" alt="user avatar" class="user-avatar">
+    <div class="chat-info" >
+      <img  *ngFor="let user of this.chatService.participators"  [src]="user.userInfo.photoURL" alt="user avatar" class="user-avatar" [matTooltip]="user.userInfo.userName" [matTooltipShowDelay]="500">
     </div>
     <div class="message-container">
       <div *ngFor="let msg of messages" [class]="(msg.from == (this.auth$|async)?.user?.userId) ? 'card' : 'friend'">
         <!-- <p >from:{{msg.from}}</p> -->
-        <img *ngIf="(msg.from != (this.auth$|async)?.user?.userId)" [src]="msg.photoURL" alt="">
+        <img *ngIf="(msg.from != (this.auth$|async)?.user?.userId)" [src]="msg.fromURL" alt="">
         <p>{{msg.msg}}</p>
-        <img *ngIf="(msg.from == (this.auth$|async)?.user?.userId)" [src]="msg.photoURL" alt="">
+        <img *ngIf="(msg.from == (this.auth$|async)?.user?.userId)" [src]="msg.fromURL" alt="">
 
       </div>
      </div>
     <div class="send-message">
-      <input (keydown)="send(newMessage,$event)" id="send" type="text" [(ngModel)]="newMessage" placeholder="Enter your message">
-      <button (click)="sendMessage(newMessage)">Send</button>
+      <input (keypress)="send(newMessage,$event)"  type="text" [(ngModel)]="newMessage" placeholder="Enter your message">
+      <button id="send" (click)="sendMessage(newMessage)">Send</button>
     </div>
   </div>
 </div>

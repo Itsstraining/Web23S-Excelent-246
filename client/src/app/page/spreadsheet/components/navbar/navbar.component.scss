@@ -112,6 +112,20 @@ p:focus{
 
 //right side
 
+.user-content{
+  width: 50%;
+  height: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.user-content img{
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+}
+
 .right-side {
   width: 50%;
   height: 100%;

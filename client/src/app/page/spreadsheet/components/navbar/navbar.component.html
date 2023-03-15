@@ -17,8 +17,8 @@
     </div>
     <div class="right-side">
       <div class="right-side-content">
-        <div  *ngFor="let user of this.users |slice:0:4" [matTooltip]="user.userName!" [matTooltipShowDelay]="500" style="display: flex; justify-content: center; align-items: center;">
-          <img *ngIf="user.userId != (this.auth$|async)?.user?.userId" [src]="(this.auth$|async)?.user?.photoURL" (error)="updateUrl($event)" alt="user avatar" class="user-avatar">
+        <div class="user-content">
+          <img *ngFor="let user of this.users |slice:0:4" [matTooltip]="user.userInfo.userName!" [matTooltipShowDelay]="500" [src]="user.userInfo.photoURL" (error)="updateUrl($event)" alt="user avatar" class="user-avatar">
         </div>
         <div (click)="share()" class="share">
           Share

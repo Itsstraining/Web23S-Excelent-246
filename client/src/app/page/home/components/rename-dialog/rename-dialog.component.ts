@@ -15,13 +15,14 @@ import { User } from 'src/app/model/user.model';
   templateUrl: './rename-dialog.component.html',
   styleUrls: ['./rename-dialog.component.scss'],
 })
-export class RenameDialogComponent {
+export class RenameDialogComponent  {
   files$!: Observable<FileState>;
   users$!: Observable<AuthState>;
   user!: User
   @ViewChild('inputId') input!: ElementRef;
   idToUpdate = this.fileService.idToUpdate;
   file!: File;
+  newName = '';
   constructor(
     public dialogRef: MatDialogRef<RenameDialogComponent>,
     private fileService: FileService,
@@ -38,6 +39,7 @@ export class RenameDialogComponent {
   }
 
   closeDialog() {
+
     this.dialogRef.close();
   }
 

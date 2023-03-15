@@ -10,6 +10,7 @@ import { FileState } from 'src/ngrx/states/file.states';
 import { User } from 'src/app/model/user.model';
 import {File} from 'src/app/model/file.model'
 import { Timestamp } from '@angular/fire/firestore';
+import { Socket } from 'ngx-socket-io';
 
 @Component({
   selector: 'app-template',
@@ -25,7 +26,8 @@ export class TemplateComponent {
 
     protected fileService: FileService,
     private store: Store<{ auth: AuthState; file: FileState }>,
-    private router: Router
+    private router: Router,
+    private socket: Socket
   ) {
     this.user$ = this.store.select('auth');
     this.user$.subscribe((user) => {
@@ -38,12 +40,12 @@ export class TemplateComponent {
   }
 
   templates = [
-    { name: 'Empty' },
-    { name: 'Monthly budget' },
-    { name: 'Annual budget' },
-    { name: 'To-do list' },
-    { name: 'Investment tracker' },
-    { name: 'Work schedule' },
+    { name: 'Empty' , span: '+', value: 'true'},
+    { name: 'Monthly budget' ,img: 'https://ssl.gstatic.com/docs/templates/thumbnails/1Db6sfBIFIJ45O-WxrH3_7auMPpiZ8wMc-sqCVjaLJgo_400.png', value: 'false'},
+    { name: 'Annual budget' ,img: 'https://ssl.gstatic.com/docs/templates/thumbnails/1-G94ItToCkCf34aBAjD5gnJb86N5viFUeerMi-xpWdw_400.png', value: 'false'},
+    { name: 'To-do list' ,img: 'https://ssl.gstatic.com/docs/templates/thumbnails/18CjGVazKR_Emu6CNy0JHCQBaQuL4RfculNG3kepFCDU_400_2.png' , value: 'false'},
+    { name: 'Investment tracker' ,img: 'https://ssl.gstatic.com/docs/templates/thumbnails/1N7-yV4TzDTYO1EN14tPR8GOKsx_GpQ_ufvH9f33uQpA_400.png', value: 'false'},
+    { name: 'Work schedule' ,img: 'https://ssl.gstatic.com/docs/templates/thumbnails/1lNgQBSI7GtfaRFku1w-W4rqRqf_XuYPBUbXlOwdz_BA_400.png', value: 'false'},
   ];
 
   startNewFile() {
@@ -172,11 +174,32 @@ export class TemplateComponent {
       members:[],
   };
 
+    // this.join(fileToCreate.fileId, this.currentUser);
+    this.watchRoomChange();
+
     this.fileService.currentFile = fileToCreate;
     this.store.dispatch(FileActions.createFile({ file: fileToCreate }));
     this.store.dispatch(FileActions.createFileSuccess({ file: this.fileService.currentFile }));
     
     this.router.navigate(['/spreadsheet', fileToCreate.fileId]);
-    
+  }
+
+
+  join(fileId: string, user: User){
+    let payload = {
+      fileId: fileId,
+      user: user
+    }
+    // console.log('join' + payload.fileId);
+    this.socket.emit('joinRoom', payload);
+  }
+
+  watchRoomChange() {
+    return new Observable((observer) => {
+      this.socket.on('update-room', (data: any) => {
+        console.log(data);
+        observer.next(data);
+      })
+    })
   }
 }
