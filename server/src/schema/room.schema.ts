@@ -1,6 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument } from 'mongoose';
-import { AuthModel } from 'src/Models/auth.model';
+import { AuthModel } from 'src/models/auth.model';
 
 export type RoomDocument = HydratedDocument<Room>;
 
