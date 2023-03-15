@@ -231,8 +231,8 @@ export const FileReducer = createReducer(
   on(FileActions.deleteFile, (state, { fileId }) => {
     return {
       ...state,
-      inProcess: true,
-      loading: true,
+      inProcess: false,
+      loading: false,
       error: '',
     };
   }),

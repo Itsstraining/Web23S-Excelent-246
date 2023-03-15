@@ -57,7 +57,7 @@ export class ContentComponent implements OnInit {
     })
     setTimeout(() => {
       this.route.navigate([`/spreadsheet/${fileId}`]);
-    },1500)
+    },1000)
   }
 
   canRename(ownerId: string) {
@@ -76,13 +76,6 @@ export class ContentComponent implements OnInit {
 
   openDialog() {
     this.dialog.open(RenameDialogComponent);
-    
-// setTimeout(()=>{
-//   this.store.dispatch(FileActions.getFileById({ fileId: this.fileService.idToUpdate! }));
-
-// },3000)
-this.store.dispatch(FileActions.getFileById({ fileId: this.fileService.idToUpdate! }));
-
   }
 
   getId(fileId: string) {

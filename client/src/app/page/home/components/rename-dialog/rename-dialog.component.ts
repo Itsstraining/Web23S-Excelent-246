@@ -15,13 +15,14 @@ import { User } from 'src/app/model/user.model';
   templateUrl: './rename-dialog.component.html',
   styleUrls: ['./rename-dialog.component.scss'],
 })
-export class RenameDialogComponent {
+export class RenameDialogComponent  {
   files$!: Observable<FileState>;
   users$!: Observable<AuthState>;
   user!: User
   @ViewChild('inputId') input!: ElementRef;
   idToUpdate = this.fileService.idToUpdate;
   file!: File;
+  newName = '';
   constructor(
     public dialogRef: MatDialogRef<RenameDialogComponent>,
     private fileService: FileService,
@@ -32,56 +33,43 @@ export class RenameDialogComponent {
     this.users$ = this.store.select('auth');
     this.users$.subscribe((data) => {
       this.user = data.user!;
-      
+      console.log(data.user);
     })
-      //  this.files$.subscribe((data) => {
-      //   console.log(data.file)
-      //     this.file = { ...data.file! };
-      //     // this.file.title = newName;
-      //     // this.file.createdBy = data.file?.createdBy!;
-      //     // this.file.createdDate = data.file?.createdDate!;
-      // });
-
-  
-    // console.log(this.file )
+    // this.store.dispatch(FileActions.getFilesByUserId({ userId: this.user.userId! }));
   }
 
   closeDialog() {
+
     this.dialogRef.close();
   }
 
 
-  rename() {
-    // this.store.dispatch(FileActions.getFileById({ fileId: this.fileService.idToUpdate }));
+  test() {
     let newName = this.input.nativeElement.value;
-    if(newName != ''){
-      // this.file.title = newName;
-      
-      this.files$.subscribe((data) => {
-        console.log(data.file)
-          this.file = { ...data.file! };
-          // this.file.title = newName;
-          // this.file.createdBy = data.file?.createdBy!;
-          // this.file.createdDate = data.file?.createdDate!;
-      });
-  
-      this.store.dispatch(
-        FileActions.updateFile({
-          fileId: this.idToUpdate,
-          file: {
-            ...this.file,
-            title: newName,
-            // createdBy: this.file.createdBy,
-            // createdDate: this.file.createdDate,
-          },
-        })
-      );
-      
-    }
-    
-    console.log(this.file)
-    // this.store.dispatch(FileActions.getFileById({ fileId: this.fileService.idToUpdate! }));
 
+    this.files$.subscribe((data) => {
+      console.log(data.file);
+
+      // if (data.loading == false) {
+        this.file = { ...data.file! };
+        this.file.title = newName;
+        this.file.createdBy = data.file?.createdBy!;
+        this.file.createdDate = data.file?.createdDate!;
+      // }
+    });
+    console.log(this.file);
+
+    this.store.dispatch(
+      FileActions.updateFile({
+        fileId: this.idToUpdate,
+        file: {
+          ...this.file,
+          title: newName,
+          createdBy: this.file.createdBy,
+          createdDate: this.file.createdDate,
+        },
+      })
+    );
     this.dialogRef.close();
 
   }
