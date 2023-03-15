@@ -21,7 +21,7 @@
           <img *ngIf="user.userId != (this.auth$|async)?.user?.userId" [src]="(this.auth$|async)?.user?.photoURL" (error)="updateUrl($event)" alt="user avatar" class="user-avatar">
         </div>
         <div (click)="share()" class="share">
-          Chia sẻ
+          Share
         </div>
         <div class="profile">
           <div class="avt">

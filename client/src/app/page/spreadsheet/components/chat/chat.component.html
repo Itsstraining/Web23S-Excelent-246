@@ -19,9 +19,9 @@
     <div class="message-container">
       <div *ngFor="let msg of messages" [class]="(msg.from == (this.auth$|async)?.user?.userId) ? 'card' : 'friend'">
         <!-- <p >from:{{msg.from}}</p> -->
-        <img *ngIf="(msg.from != (this.auth$|async)?.user?.userId)" [src]="(this.auth$|async)?.user?.photoURL" alt="">
+        <img *ngIf="(msg.from != (this.auth$|async)?.user?.userId)" [src]="msg.photoURL" alt="">
         <p>{{msg.msg}}</p>
-        <img *ngIf="(msg.from == (this.auth$|async)?.user?.userId)" [src]="(this.auth$|async)?.user?.photoURL" alt="">
+        <img *ngIf="(msg.from == (this.auth$|async)?.user?.userId)" [src]="msg.photoURL" alt="">
 
       </div>
      </div>
