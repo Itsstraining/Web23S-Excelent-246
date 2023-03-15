@@ -2,12 +2,12 @@ import { InvitationService } from './invitation.service';
 import { Body, Controller, Delete, Get, Param, Post, Put, Query } from '@nestjs/common';
 import { Invitation } from 'src/schema/invitation.schema';
 // import { FileModel } from 'src/Models/file.model';
-import { FileService } from '../file/file.service';
+import { FileService } from '../File/file.service';
 
 @Controller('invitation')
 export class InvitationController {
 
-    constructor(private invitationService: InvitationService, private fileService: FileService) {}
+    constructor(private invitationService: InvitationService) {}
 
 
     @Post('send/:id')
