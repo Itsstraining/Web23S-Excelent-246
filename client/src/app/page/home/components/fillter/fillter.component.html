@@ -1,47 +1,32 @@
 <div class="histories-fillters">
   <div class="histories-fillters-time">Recently</div>
   <div class="histories-fillters-owner">
-    <select
-      (change)="onChange($event)"
-      class="histories-fillters-owner-options"
-    >
+    <select (change)="onChange($event)" class="histories-fillters-owner-options">
       <option *ngFor="let choice of optionChoices" [value]="choice.value">
         <p>{{ choice.name }}</p>
       </option>
     </select>
   </div>
-  <div class="histories-fillters-date">Last opened by me</div>
+  <div class="histories-fillters-date">Created at</div>
   <div class="histories-fillters-options">
-    <button
-      (click)="openDialog()"
-      mat-icon-button
-      class="histories-fillters-view"
-    >
+    <button (click)="openDialog()" mat-icon-button class="histories-fillters-view">
       <mat-icon>calendar_view_month</mat-icon>
     </button>
-    <button
-      mat-icon-button
-      class="histories-fillters-sort"
-      [matMenuTriggerFor]="menu"
-      aria-label="Example icon-button with a menu"
-    >
+    <button mat-icon-button class="histories-fillters-sort" [matMenuTriggerFor]="menu"
+      aria-label="Example icon-button with a menu">
       <mat-icon>sort_by_alpha</mat-icon>
     </button>
     <mat-menu #menu="matMenu">
       <button (click)="getFilesByDate()" mat-menu-item>
         <mat-icon></mat-icon>
-        <span>Last opened by me</span>
+        <span>Create date</span>
       </button>
       <button (click)="getFilesByTitle()" mat-menu-item>
         <mat-icon></mat-icon>
         <span>Title</span>
       </button>
     </mat-menu>
-    <button
-      mat-icon-button
-      (click)="openFile()"
-      class="histories-fillters-open-file"
-    >
+    <button mat-icon-button (click)="openFile()" class="histories-fillters-open-file">
       <mat-icon>folder_open</mat-icon>
     </button>
   </div>

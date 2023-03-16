@@ -12,7 +12,7 @@ import { Timestamp } from 'firebase/firestore';
 import { FileActions } from 'src/ngrx/actions/file.actions';
 import { FileState } from 'src/ngrx/states/file.states';
 import { FileService } from 'src/app/service/file.service';
-import {LoadingComponent} from '../../../../components/loading/loading.component'
+import { LoadingComponent } from '../../../../components/loading/loading.component'
 import { File } from 'src/app/model/file.model';
 @Component({
   selector: 'app-share-dialog',
@@ -21,11 +21,11 @@ import { File } from 'src/app/model/file.model';
 })
 export class ShareDialogComponent {
 
-  id!:string;
-  idParam!:string | null;
-  fileName!:string;
+  id!: string;
+  idParam!: string | null;
+  fileName!: string;
   users$!: Observable<AuthState>;
-  user!:User;
+  user!: User;
   invites$!: Observable<InvitationState>
   files$!: Observable<FileState>
   filterItem: User[] = [];
@@ -35,17 +35,17 @@ export class ShareDialogComponent {
   // send = document.getElementsByClassName('send');
   constructor(private store: Store<{ auth: AuthState, invite: InvitationState, file: FileState }>, private route: ActivatedRoute,
     private fileService: FileService) {
-      this.files$ = this.store.select('file');
-      this.invites$ = this.store.select('invite');
-      // this.store.dispatch(FileActions.getFileById({ fileId: this.fileService.idParam! }));
-      this.files$.subscribe((data) => {
-      if(data.loading == false){
+    this.files$ = this.store.select('file');
+    this.invites$ = this.store.select('invite');
+    // this.store.dispatch(FileActions.getFileById({ fileId: this.fileService.idParam! }));
+    this.files$.subscribe((data) => {
+      if (data.loading == false) {
         this.currentFile = data.file!;
-        console.log(data.file);
+        // console.log(data.file);
         this.fileName = data.file?.title!;
-        console.log(this.fileName);
-        
-        }
+        // console.log(this.fileName);
+
+      }
     })
     this.users$ = this.store.select('auth');
     this.store.dispatch(AuthActions.getAllUsers());
@@ -73,10 +73,10 @@ export class ShareDialogComponent {
 
   sendInvite(receiver: User) {
     let index = this.currentFile.members.findIndex((res) => res == receiver.userId)
-    if(index == -1){
-      console.log(this.fileService.idParam);
-      if(this.fileService.idParam!=null){
-        let invitation:Invitation = {
+    if (index == -1) {
+      // console.log(this.fileService.idParam);
+      if (this.fileService.idParam != null) {
+        let invitation: Invitation = {
           id: Timestamp.now().toMillis().toString(),
           from: this.user.userId!,
           name: this.user.userName!,
@@ -84,10 +84,11 @@ export class ShareDialogComponent {
           status: 'pending',
           fileId: this.fileService.idParam,
           fileName: this.fileName,
+        }
+        // console.log(invitation);
+        this.store.dispatch(InvitationActions.sendInvitation({ invitation: invitation, idReceiver: receiver.userId! }));
       }
-      console.log(invitation);
-      this.store.dispatch(InvitationActions.sendInvitation({invitation: invitation, idReceiver: receiver.userId!}));}
-    }else{
+    } else {
       return;
     }
   }

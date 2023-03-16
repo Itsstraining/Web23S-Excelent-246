@@ -22,16 +22,16 @@ export class RoomService {
     async addUser(id: string, user: AuthModel): Promise<Room> {
         try {
             const document = await this.roomModel.findOne({ id: id }).exec();
-         
+
             if (!document) return this.create(id, user);
-           
+
             let inRoom = document.users.findIndex((userInRoom) => userInRoom.userId == user.userId);
-        
+
             if (inRoom !== -1) return null;
             document.users.push(user);
             return document.save();
         } catch (err) {
-            console.log('lỗi 4', err);
+            // console.log('lỗi 4', err);
         }
 
 
@@ -42,25 +42,25 @@ export class RoomService {
             if (!document) return null;
             return document;
         } catch (err) {
-            console.log('lỗi 3', err);
+            // console.log('lỗi 3', err);
         }
 
     }
     async delete(id: string): Promise<Room> {
         try {
             const document = await this.roomModel.findOne({ id: id }).exec();
-          
+
             if (!document) return null;
 
             return document.remove();
         } catch (err) {
-            console.log('lỗi 2', err);
+            // console.log('lỗi 2', err);
         }
 
     }
     async removeUser(id: string, user: AuthModel): Promise<Room> {
         try {
-           
+
             const document = await this.roomModel.findOne({ id: id }).exec();
             if (!document) return null;
             let inRoom = document.users.findIndex((userInRoom) => userInRoom.userId == user.userId);
@@ -69,7 +69,7 @@ export class RoomService {
             if (document.users.length === 0) return this.delete(id);
             return document.save();
         } catch (err) {
-            console.log('lỗi 1', err);
+            // console.log('lỗi 1', err);
         }
 
     }

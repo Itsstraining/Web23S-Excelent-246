@@ -8,12 +8,11 @@ import { AuthService } from '../../../app/service/auth.service'
   styleUrls: ['./navbar-one.component.scss']
 })
 export class NavbarOneComponent {
-  constructor(public authService: AuthService, public router:Router) {
+  constructor(public authService: AuthService, public router: Router) {
   }
   public login() {
     try {
       this.authService.loginGG();
-      console.log('login success!');
     } catch (err) {
       alert('login fail!');
     }

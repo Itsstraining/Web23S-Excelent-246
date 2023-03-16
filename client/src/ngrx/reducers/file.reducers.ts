@@ -123,7 +123,7 @@ export const FileReducer = createReducer(
   }),
   on(FileActions.getFilesByDateSuccess, (state, { files }) => {
     let newFiles = [...state.files];
-    newFiles.sort((a, b) => a.createdDate - b.createdDate);
+    newFiles.sort((a, b) => - a.createdDate + b.createdDate);
 
     //Sort name
     // newFiles.sort((a,b) => {
@@ -164,8 +164,8 @@ export const FileReducer = createReducer(
     };
   }),
   on(FileActions.getFilesByTitleSuccess, (state, { files }) => {
-    let newFiles:any = [...state.files];
-    newFiles.sort((a:any, b:any) => {
+    let newFiles: any = [...state.files];
+    newFiles.sort((a: any, b: any) => {
       const titleA = a.title.toUpperCase();
       const titleB = b.title.toUpperCase();
       if (titleA < titleB) {
@@ -193,7 +193,7 @@ export const FileReducer = createReducer(
     };
   }),
 
-  on(FileActions.updateFile, (state,{fileId, file}) => {
+  on(FileActions.updateFile, (state, { fileId, file }) => {
     return {
       ...state,
       inProcess: false,
@@ -205,7 +205,7 @@ export const FileReducer = createReducer(
   on(FileActions.updateFileSuccess, (state, { file }) => {
     let newFiles = [...state.files];
     let index = newFiles.findIndex((f) => f.fileId == file.fileId)
-    newFiles[index] = {...file}
+    newFiles[index] = { ...file }
     // let newFiles = [...state.files];
     // let index = newFiles.findIndex((f) => f.fileId == fileId);
     // if (index != -1) {
@@ -303,8 +303,8 @@ export const FileReducer = createReducer(
       error: error,
     };
   }),
-  
-  on(FileActions.updateFileData, (state, ) => {
+
+  on(FileActions.updateFileData, (state,) => {
     return {
       ...state,
       inProcess: false,
@@ -314,8 +314,8 @@ export const FileReducer = createReducer(
   }),
 
   on(FileActions.updateFileDataSuccess, (state, { fileData }) => {
-    let newFile = {...state.file!};
-    newFile = {...newFile, data: fileData};
+    let newFile = { ...state.file! };
+    newFile = { ...newFile, data: fileData };
     return {
       ...state,
       file: newFile,

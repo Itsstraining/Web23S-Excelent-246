@@ -10,7 +10,7 @@ export class AuthController {
     @Post('sign-in')
     async signIn(@Body() user: AuthModel) {
         let temp = await this.authService.findUserById(user.userId);
-        console.log(temp);
+        // console.log(temp);
         if (temp != null) {
             return 'User already exists';
         } else {
@@ -27,7 +27,7 @@ export class AuthController {
     }
 
     @Get('getAllUsers')
-    getAllUsers(){
+    getAllUsers() {
         return this.authService.getAllUsers();
     }
 }

@@ -12,7 +12,7 @@ import { AuthState } from 'src/ngrx/states/auth.states';
   templateUrl: './chat.component.html',
   styleUrls: ['./chat.component.scss']
 })
-export class ChatComponent implements OnInit{
+export class ChatComponent implements OnInit {
   title = 'client';
 
   chat$!: Observable<any>;
@@ -23,11 +23,11 @@ export class ChatComponent implements OnInit{
   newMessage: string = '';
   userName: string = '';
   auth$!: Observable<AuthState>;
-  user!:User; 
+  user!: User;
   sender = document.getElementById('send')! as HTMLElement;
   prevChat$!: Observable<any>;
 
-  constructor(protected chatService: ChatService, private route: ActivatedRoute,private store: Store<{auth: AuthState}>){
+  constructor(protected chatService: ChatService, private route: ActivatedRoute, private store: Store<{ auth: AuthState }>) {
     this.auth$ = this.store.select('auth');
     this.auth$.subscribe((res) => {
       this.user = res.user!;
@@ -38,26 +38,26 @@ export class ChatComponent implements OnInit{
     });
     setTimeout(() => {
       this.joinRoom();
-    },1500)
+    }, 1500)
   }
 
-  ngOnInit(){
+  ngOnInit() {
     this.prevChat$ = this.chatService.getPrevMessagesByRoomId(this.roomId);
-    this.prevChat$.subscribe((res:any) => {
+    this.prevChat$.subscribe((res: any) => {
       this.messages = res.filter(() => res != null);
     })
   }
 
-  joinRoom(){
-      console.log('Already joined in: ', this.roomId);
-      this.chat$ = this.chatService.getMessageByRoomId(this.roomId);
-      this.chat$.subscribe((message: any) => {
-        this.messages.push(message)
-        console.log(message)  
-      });
-      
+  joinRoom() {
+    // console.log('Already joined in: ', this.roomId);
+    this.chat$ = this.chatService.getMessageByRoomId(this.roomId);
+    this.chat$.subscribe((message: any) => {
+      this.messages.push(message)
+      // console.log(message)
+    });
+
   }
-  sendMessage(message: string ){
+  sendMessage(message: string) {
     let newMessageData: ChatModel = {
       roomId: this.roomId,
       msg: message,
@@ -66,14 +66,14 @@ export class ChatComponent implements OnInit{
       fromURL: this.user.photoURL!,
 
     }
-    if(message == ''){
+    if (message == '') {
       return;
     }
     this.chatService.sendMessageByRoom(newMessageData);
     this.newMessage = '';
   }
 
-  send(message: string){
+  send(message: string) {
     let newMessageData: ChatModel = {
       roomId: this.roomId,
       msg: message,
@@ -81,7 +81,7 @@ export class ChatComponent implements OnInit{
       from: this.user.userId!,
       fromURL: this.user.photoURL!,
     }
-    if(message == ''){
+    if (message == '') {
       return;
     }
     // this.sender.addEventListener('keypress', (event) => {

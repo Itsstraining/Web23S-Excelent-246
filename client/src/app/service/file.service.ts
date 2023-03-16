@@ -51,7 +51,7 @@ export class FileService {
   }
 
   getDataByFileId(fileId: string) {
-    console.log('join-' + fileId);
+    // console.log('join-' + fileId);
     const channel = 'message-' + fileId;
     return this.socket.fromEvent(channel);
   }
@@ -62,7 +62,7 @@ export class FileService {
 
   sendDataByFileId(fileId: string, data: any) {
     this.socket.emit('message', { fileId: fileId, data: data });
-    console.log(data);
+    // console.log(data);
   }
 
 
@@ -120,7 +120,7 @@ export class FileService {
   }
 
   exportFile(spreadsheet: Spreadsheet, file: File, name: string) {
-    console.log(file);
+    // console.log(file);
     spreadsheet.save({
       // url:'https://ej2services.syncfusion.com/production/web-services/api/spreadsheet/save',
       fileName: name,

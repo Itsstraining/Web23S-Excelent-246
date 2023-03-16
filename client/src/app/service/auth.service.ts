@@ -66,7 +66,7 @@ export class AuthService {
               photoURL: user.photoURL,
             })
             .subscribe((response) => {
-              console.log(response);
+              // console.log(response);
             });
         }
       } catch (err) {

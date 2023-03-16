@@ -25,31 +25,31 @@ import { Socket } from 'ngx-socket-io';
 })
 export class SpreadsheetComponent implements OnInit {
   @ViewChild('spreadsheet') spreadsheetObj!: Spreadsheet;
-  ngAfterViewInit(){
+  ngAfterViewInit() {
     setTimeout(() => {
       this.FileService.spreadsheet = this.spreadsheetObj;
-    },2000)
+    }, 2000)
   }
   // test!: SpreadsheetComponent;
   data$!: Observable<any>;
-  tempData:any[] = [];
-  newData!:any;
+  tempData: any[] = [];
+  newData!: any;
   model!: CollaborativeEditArgs
-  temp!:any;
-  newFile!:File;
+  temp!: any;
+  newFile!: File;
   user!: User;
   users: any[] = [];
   hide() {
     this.spreadsheetObj.hideFileMenuItems(['File'], true);
   }
-  file!:File;
+  file!: File;
   auth$!: Observable<AuthState>
   file$!: Observable<FileState>
   id!: string;
-  idParam!:string | null;
+  idParam!: string | null;
   evt!: any;
-  response!:any;
-  fileToUpdate!:File;
+  response!: any;
+  fileToUpdate!: File;
 
   constructor(
     protected FileService: FileService,
@@ -72,58 +72,64 @@ export class SpreadsheetComponent implements OnInit {
       this.FileService.idParam = params.get('id')!;
       // console.log(this.FileService.idParam);
     });
-    this.store.dispatch(FileActions.getFileById({fileId: this.FileService.idParam!}));
+    this.store.dispatch(FileActions.getFileById({ fileId: this.FileService.idParam! }));
     this.file$.subscribe((res) => {
       this.FileService.currentFile = res.file;
       // console.log(this.FileService.currentFile);
     })
-    
+
 
     this.openFile();
-    
-}
+
+  }
 
 
-  openFile(){
+  openFile() {
     setTimeout(() => {
-      console.log(this.FileService.currentFile)
-      this.spreadsheetObj.openFromJson({file: this.FileService.currentFile?.data.jsonObject});
-      
+      // console.log(this.FileService.currentFile)
+      this.spreadsheetObj.openFromJson({ file: this.FileService.currentFile?.data.jsonObject });
 
-    },3000);
-    
+
+    }, 3000);
+
   }
 
   ngOnInit(): void {
-    console.log(this.FileService.currentFile?.data);
+    // console.log(this.FileService.currentFile?.data);
     this.joinRoom();
   }
 
-  ngOnChanges(event:any): void {
+  ngOnChanges(event: any): void {
     this.spreadsheetObj.saveAsJson().then((JsonFile) => {
-      console.log(JsonFile);
+      // console.log(JsonFile);
       this.response = JsonFile;
     })
     this.file$.subscribe((res) => {
-      this.fileToUpdate = {...res.file!};
-      console.log(this.fileToUpdate)      // console.log(fileToUpdate.data);
+      this.fileToUpdate = { ...res.file! };
+      // console.log(this.fileToUpdate)      // console.log(fileToUpdate.data);
     })
 
     setTimeout(() => {
-      let model: CollaborativeEditArgs = {...event} as CollaborativeEditArgs;
-      this.fileToUpdate.data = {...this.response};
+      let model: CollaborativeEditArgs = { ...event } as CollaborativeEditArgs;
+      if (model.action == "gotoSheet") {
+        return;
+      } else {
+        this.FileService.sendDataByFileId(this.FileService.idParam!, event);
+      }
+      this.fileToUpdate.data = { ...this.response };
+
       // console.log(this.fileToUpdate.data);
       // console.log(model.eventArgs.address);
-      this.FileService.sendDataByFileId(this.FileService.idParam!, event);
-    },2500)
-    
+
+    }, 2500)
+
     setTimeout(() => {
       // console.log(this.fileToUpdate);
       // console.log(this.fileToUpdate.data);
-      this.store.dispatch(FileActions.updateFile({fileId: this.FileService.idParam!,file: {...this.fileToUpdate, data: {...this.fileToUpdate.data}}}));
-    },2500);
+      this.store.dispatch(FileActions.updateFile({ fileId: this.FileService.idParam!, file: { ...this.fileToUpdate, data: { ...this.fileToUpdate.data } } }));
+    }, 2500);
   }
-  
+
 
   openUrl =
     'https://ej2services.syncfusion.com/production/web-services/api/spreadsheet/open';
@@ -135,8 +141,8 @@ export class SpreadsheetComponent implements OnInit {
   async upload() {
     let response!: any;
     await this.spreadsheetObj.saveAsJson().then((JsonFile) => {
-      console.log(JsonFile);
-      response = {...JsonFile};
+      // console.log(JsonFile);
+      response = { ...JsonFile };
     });
     let fileToUpLoad: File = {
       fileId: Timestamp.now().toMillis().toString(),
@@ -146,32 +152,33 @@ export class SpreadsheetComponent implements OnInit {
       modifiedBy: 'Truong',
       modifiedDate: 123,
       ownerId: this.id,
-      data: {...response},
+      data: { ...response },
       status: "public",
       members: ['1AVuBiKftySNehyP0B4MkSAEYtB3'],
     }
     this.FileService.addSheet(fileToUpLoad);
   }
-  
-  async open(){
+
+  async open() {
     this.spreadsheetObj.openFromJson({
       file: this.file.data.jsonObject,
     })
   }
 
 
-  joinRoom(){
+  joinRoom() {
     this.data$ = this.FileService.getDataByFileId(this.FileService.idParam);
     this.data$.subscribe((res) => {
-      if(res !== undefined || res !== null){
+      if (res !== undefined || res !== null) {
         this.tempData.push(res);
         let model: CollaborativeEditArgs = res.data as CollaborativeEditArgs;
-        if(model != undefined || model != null){
-        // console.log(model);
-        this.spreadsheetObj.updateAction(model);
-        }else{
-        } 
-    }})
+        if (model != undefined || model != null) {
+          // console.log(model);
+          this.spreadsheetObj.updateAction(model);
+        } else {
+        }
+      }
+    })
   }
 
 

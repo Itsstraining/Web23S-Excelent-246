@@ -73,7 +73,7 @@
       f1.title
       }}</span>
     <span class="histories-contents-owner">{{ f1.createdBy }}</span>
-    <span class="histories-contents-date">{{ f1.createdDate }}</span>
+    <span class="histories-contents-date">{{ f1.createdDate | date: 'yyyy/MM/dd HH:mm:ss' }}</span>
     <button mat-icon-button (click)="getId(f1.fileId)" [matMenuTriggerFor]="menu"
       aria-label="Example icon-button with a menu">
       <mat-icon>more_vert</mat-icon>

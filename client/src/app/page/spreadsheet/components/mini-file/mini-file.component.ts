@@ -17,12 +17,12 @@ import { User } from 'src/app/model/user.model';
   styleUrls: ['./mini-file.component.scss']
 })
 export class MiniFileComponent {
-  userId!:string | null;
-  files$:Observable<FileState>;
+  userId!: string | null;
+  files$: Observable<FileState>;
   auth$ = this.store.select('auth');
   filesToOpen!: File[];
   user!: User;
-  constructor(private fileService: FileService, private store: Store<{auth:AuthState, file: FileState}>, private router: Router, private dialog: MatDialog,
+  constructor(private fileService: FileService, private store: Store<{ auth: AuthState, file: FileState }>, private router: Router, private dialog: MatDialog,
     private socket: Socket) {
     this.auth$.subscribe((res) => {
       this.user = res.user!;
@@ -31,14 +31,14 @@ export class MiniFileComponent {
     this.files$ = this.store.select('file');
     // this.store.dispatch(FileActions.getFilesByUserId({ userId: this.userId! }));
     this.files$.subscribe((res) => {
-      if(res){
+      if (res) {
         this.filesToOpen = res.files.filter((file) => file.fileId != this.fileService.idParam);
-        console.log(res.files); 
+        // console.log(res.files);
       }
     })
   }
 
-  getFileById(file: File){
+  getFileById(file: File) {
     this.fileService.currentFile = file;
     this.fileService.idParam = file.fileId;
     this.fileService.isSelected = true;
@@ -46,13 +46,13 @@ export class MiniFileComponent {
     // this.watchRoomChange();
     // this.fileService.openFile()
     this.router.navigate(['/spreadsheet', file.fileId]);
-    console.log(this.fileService.currentFile?.data);
+    // console.log(this.fileService.currentFile?.data);
     this.dialog.closeAll();
     this.fileService.openFile(this.fileService.spreadsheet, this.fileService.currentFile)
   }
 
 
-  join(fileId: string, user: User){
+  join(fileId: string, user: User) {
     let payload = {
       fileId: fileId,
       user: user
@@ -64,7 +64,7 @@ export class MiniFileComponent {
   watchRoomChange() {
     return new Observable((observer) => {
       this.socket.on('update-room', (data: any) => {
-        console.log(data);
+        // console.log(data);
         observer.next(data);
       })
     })

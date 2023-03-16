@@ -33,7 +33,7 @@ export class RenameDialogComponent {
     this.users$ = this.store.select('auth');
     this.users$.subscribe((data) => {
       this.user = data.user!;
-      console.log(data.user);
+      // console.log(data.user);
     })
     // this.store.dispatch(FileActions.getFilesByUserId({ userId: this.user.userId! }));
   }
@@ -48,7 +48,7 @@ export class RenameDialogComponent {
     let newName = this.input.nativeElement.value;
 
     this.files$.subscribe((data) => {
-      console.log(data.file);
+      // console.log(data.file);
 
       // if (data.loading == false) {
       this.file = { ...data.file! };
@@ -58,7 +58,7 @@ export class RenameDialogComponent {
       this.file.createdDate = data.file?.createdDate!;
       // }
     });
-    console.log(this.file);
+    // console.log(this.file);
 
     this.store.dispatch(
       FileActions.updateFile({

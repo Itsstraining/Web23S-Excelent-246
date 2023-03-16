@@ -25,7 +25,7 @@ import { Socket } from 'ngx-socket-io';
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss'],
 })
-export class NavbarComponent implements OnInit, OnDestroy{
+export class NavbarComponent implements OnInit, OnDestroy {
   public isEditing: boolean;
   public pendingValue!: string;
   public title = '';
@@ -63,34 +63,35 @@ export class NavbarComponent implements OnInit, OnDestroy{
     // this.store.dispatch(FileActions.getFilesByUserId({ userId: JSON.parse(localStorage.getItem('idParam')!) }));
     this.store.dispatch(FileActions.getFileById({ fileId: this.idParam }));
 
-    console.log(this.fileService.idParam!)
+    // console.log(this.fileService.idParam!)
     this.socket.connect()
-    try{
+    try {
       setTimeout(() => {
-      this.join(this.fileService.idParam,this.user!);
-      this.watchRoom = this.watchRoomChange().subscribe((data:any) => {
-        // this.users
-        if(data.users){
-          this.chatService.participators = data.users;
-          console.log(chatService.participators);
-          let temp = data.users.filter((user:any) => user.userInfo.userId != this.user.userId);
-          console.log(temp);
-          this.users = temp;
-          
-        }
-      })},2000)
+        this.join(this.fileService.idParam, this.user!);
+        this.watchRoom = this.watchRoomChange().subscribe((data: any) => {
+          // this.users
+          if (data.users) {
+            this.chatService.participators = data.users;
+            // console.log(chatService.participators);
+            let temp = data.users.filter((user: any) => user.userInfo.userId != this.user.userId);
+            // console.log(temp);
+            this.users = temp;
+
+          }
+        })
+      }, 2000)
 
     }
     catch (err) {
-      console.log(err)
+      // console.log(err)
     }
 
   }
 
   ngOnInit(): void {
     setTimeout(() => {
-      this.store.dispatch(FileActions.getFilesByUserId({ userId: this.user.userId!}));
-    },1000)
+      this.store.dispatch(FileActions.getFilesByUserId({ userId: this.user.userId! }));
+    }, 1000)
     // this.title = this.fileService.currentFile.title!;
     // console.log(this.fileService.currentFile)
     // console.log(this.fileService.idParam);
@@ -110,20 +111,21 @@ export class NavbarComponent implements OnInit, OnDestroy{
   ngAfterViewInit() {
     // console.log(this.menu);
   }
-  rename(){
+  rename() {
     this.editable = true;
     let picker = document.getElementById('title') as HTMLElement;
     picker.addEventListener('keydown', (event) => {
-      if(event.key == "Enter"){
+      if (event.key == "Enter") {
         this.editable = false;
-        console.log(picker.innerHTML);
+        // console.log(picker.innerHTML);
         setTimeout(() => {
           this.newName = picker.innerHTML;
           // this.fileService.currentFile = {...this.fileService.currentFile, title: this.newName};
-          this.store.dispatch(FileActions.updateFile({fileId: this.fileService.idParam!, file: {...this.fileService.currentFile, title: this.newName}}))
-        },2000)
-    }})
-    
+          this.store.dispatch(FileActions.updateFile({ fileId: this.fileService.idParam!, file: { ...this.fileService.currentFile, title: this.newName } }))
+        }, 2000)
+      }
+    })
+
   }
 
   menuItemText: string[] = [
@@ -141,11 +143,11 @@ export class NavbarComponent implements OnInit, OnDestroy{
     'Options',
   ];
 
-  ngOnDestroy() :void{
+  ngOnDestroy(): void {
 
     this.leave(this.fileService.idParam!, this.user);
     this.watchRoomChange();
-    console.log(this.users);
+    // console.log(this.users);
   }
 
   menuItems: MenuItemModel[] | any = [
@@ -190,7 +192,7 @@ export class NavbarComponent implements OnInit, OnDestroy{
     if (temp == 'Open') {
       this.open();
     }
-    else if(temp == 'Save'){
+    else if (temp == 'Save') {
       this.fileService.exportFile(this.fileService.spreadsheet, this.fileService.currentFile.data.jsonObject, this.fileService.currentFile.title);
     }
   }
@@ -228,7 +230,7 @@ export class NavbarComponent implements OnInit, OnDestroy{
 
   }
 
-  join(fileId: string, user: User){
+  join(fileId: string, user: User) {
     let payload = {
       fileId: fileId,
       user: user
@@ -237,7 +239,7 @@ export class NavbarComponent implements OnInit, OnDestroy{
     this.socket.emit('joinRoom', payload);
   }
 
-  leave(fileId: string, user: User){
+  leave(fileId: string, user: User) {
     let payload = {
       fileId: fileId,
       user: user
@@ -249,7 +251,7 @@ export class NavbarComponent implements OnInit, OnDestroy{
   watchRoomChange() {
     return new Observable((observer) => {
       this.socket.on('update-room', (data: any) => {
-        console.log(data);
+        // console.log(data);
         observer.next(data);
       })
     })

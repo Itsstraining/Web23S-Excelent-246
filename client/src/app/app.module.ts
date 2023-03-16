@@ -29,7 +29,7 @@ import { MatIconModule } from '@angular/material/icon';
 
 // SocketIO
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
-const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
+const config: SocketIoConfig = { url: 'https://excelent-k32n4ohtya-uc.a.run.app/', options: {} };
 
 @NgModule({
   declarations: [AppComponent],
@@ -53,11 +53,11 @@ const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
       invite: InvitationReducer,
     }),
     EffectsModule.forRoot([AuthEffects,
-    FileEffects,
-    InvitationEffect]),
+      FileEffects,
+      InvitationEffect]),
     SocketIoModule.forRoot(config),
   ],
   providers: [],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }
