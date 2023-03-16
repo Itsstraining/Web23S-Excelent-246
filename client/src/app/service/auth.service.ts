@@ -32,9 +32,9 @@ export class AuthService {
     authState(this.auth).subscribe(async (user) => {
       if (user != null) {
         this.currentUserId = user.uid
-        localStorage.setItem('userId',user.uid)
+        localStorage.setItem('userId', user.uid)
         let temp: User = {
-          
+
           userId: user?.uid,
           email: user?.email,
           userName: user?.displayName,
@@ -43,10 +43,6 @@ export class AuthService {
         this.authStore.dispatch(AuthActions.loginSuccess({ user: temp }));
       }
     });
-  }  
-  // Sign in with Google
-  getData() {
-    return this.http.get('https://social.runwayclub.dev/api/articles/latest');
   }
   loginGG() {
     const provider = new GoogleAuthProvider();
@@ -92,7 +88,7 @@ export class AuthService {
   }
 
 
-  getAllUser(){
+  getAllUser() {
     return this.http.get(environment.baseUrl + 'auth/getAllUsers') as Observable<User[]>;
   }
 }

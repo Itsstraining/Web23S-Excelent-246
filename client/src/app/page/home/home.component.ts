@@ -23,14 +23,9 @@ export class HomeComponent implements OnInit{
     private authService: AuthService,
     private store: Store<{ auth: AuthState; file: FileState }>
   ) {
-    this.auth$ = this.store.select('auth');
-    this.auth$.subscribe((data)=>{
-      
-    })
-
-    
+       
   }
   ngOnInit(){
-    console.log(localStorage.getItem('userId'))
+  
   }
 }

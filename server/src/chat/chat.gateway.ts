@@ -15,12 +15,12 @@ export class ChatGateway {
     console.log(`Client ${client.id} disconneted`);
   }
 
-  @SubscribeMessage('message')
+  @SubscribeMessage('mess')
   handleMessage(client: any, payload: any): string {
     const roomId = payload.roomId;
     console.log('message',payload);
     this.chatService.createMessage(payload);
-    this.server.emit('message-'+ roomId, payload);
+    this.server.emit('mess-'+ roomId, payload);
     return 'Hello world!';
   }
 }

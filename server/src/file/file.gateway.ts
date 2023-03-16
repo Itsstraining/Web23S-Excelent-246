@@ -1,10 +1,7 @@
-import { Sse } from '@nestjs/common';
 import { SubscribeMessage, WebSocketGateway, WebSocketServer } from '@nestjs/websockets';
-import { Observable } from 'rxjs';
 import { Server, Socket } from 'socket.io';
-import { FileService } from 'src/API/file/file.service';
+import { FileService } from '../API/File/file.service';
 import { AuthModel } from 'src/Models/auth.model';
-import { FileModel } from 'src/Models/file.model';
 
 
 
@@ -13,7 +10,7 @@ export class FileGateway{
   @WebSocketServer() server: Server;
   rooms:Array<{roomId:string,users:Array<{userInfo:AuthModel,socketId:string}>}>=[];
   
-  constructor(private fileService: FileService) {}
+  constructor() {}
 
   handleConnection(client:any, ...arg: any[]){
   

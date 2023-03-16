@@ -8,5 +8,5 @@ export const environment = {
     messagingSenderId: "123965683087",
     appId: "1:123965683087:web:20cfaaf85c908c269747fa"
   },
-  baseUrl: 'http://localhost:3000/',
+  baseUrl: 'https://excelent-k32n4ohtya-uc.a.run.app/',
 };

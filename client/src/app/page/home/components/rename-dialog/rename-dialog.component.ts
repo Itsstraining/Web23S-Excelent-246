@@ -22,6 +22,7 @@ export class RenameDialogComponent {
   @ViewChild('inputId') input!: ElementRef;
   idToUpdate = this.fileService.idToUpdate;
   file!: File;
+  newName = '';
   constructor(
     public dialogRef: MatDialogRef<RenameDialogComponent>,
     private fileService: FileService,
@@ -38,6 +39,7 @@ export class RenameDialogComponent {
   }
 
   closeDialog() {
+
     this.dialogRef.close();
   }
 
@@ -50,6 +52,7 @@ export class RenameDialogComponent {
 
       // if (data.loading == false) {
       this.file = { ...data.file! };
+      this.file.data = { ...data.file?.data }
       this.file.title = newName;
       this.file.createdBy = data.file?.createdBy!;
       this.file.createdDate = data.file?.createdDate!;
@@ -62,6 +65,7 @@ export class RenameDialogComponent {
         fileId: this.idToUpdate,
         file: {
           ...this.file,
+          data: { ...this.file.data },
           title: newName,
           createdBy: this.file.createdBy,
           createdDate: this.file.createdDate,

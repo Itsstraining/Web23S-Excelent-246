@@ -164,8 +164,8 @@ export const FileReducer = createReducer(
     };
   }),
   on(FileActions.getFilesByTitleSuccess, (state, { files }) => {
-    let newFiles = [...state.files];
-    newFiles.sort((a, b) => {
+    let newFiles:any = [...state.files];
+    newFiles.sort((a:any, b:any) => {
       const titleA = a.title.toUpperCase();
       const titleB = b.title.toUpperCase();
       if (titleA < titleB) {
@@ -214,7 +214,7 @@ export const FileReducer = createReducer(
     return {
       ...state,
       files: newFiles,
-      // file: newFiles[index],
+      file: newFiles[index],
       inProcess: false,
       loading: false,
       error: '',
@@ -231,8 +231,8 @@ export const FileReducer = createReducer(
   on(FileActions.deleteFile, (state, { fileId }) => {
     return {
       ...state,
-      inProcess: true,
-      loading: true,
+      inProcess: false,
+      loading: false,
       error: '',
     };
   }),

@@ -20,7 +20,7 @@ import { File } from '../model/file.model';
 import { Observable } from 'rxjs';
 
 //SocketIO
-import {Socket} from 'ngx-socket-io'
+import { Socket } from 'ngx-socket-io'
 import { getFirestore } from 'firebase/firestore';
 import { User } from '../model/user.model';
 
@@ -28,7 +28,7 @@ import { User } from '../model/user.model';
   providedIn: 'root',
 })
 export class FileService {
-  constructor(private fireStore: Firestore, private http: HttpClient, private socket: Socket) {}
+  constructor(private fireStore: Firestore, private http: HttpClient, private socket: Socket) { }
   public idToDelete!: string;
   public idToUpdate!: string;
   public idParam!: string;
@@ -42,26 +42,26 @@ export class FileService {
   db2 = getFirestore();
 
 
-  addSheet(file:File){
+  addSheet(file: File) {
     setDoc(doc(this.db, file.fileId), file);
   }
 
-  updateFileData(id: string, data:any){
+  updateFileData(id: string, data: any) {
     return this.http.put(`${environment.baseUrl}file/updateData?id=${id}`, data);
   }
 
-  getDataByFileId(fileId: string){
+  getDataByFileId(fileId: string) {
     console.log('join-' + fileId);
     const channel = 'message-' + fileId;
     return this.socket.fromEvent(channel);
   }
 
-  leaveRoom(){
+  leaveRoom() {
     // this.socket.emit('');
   }
 
-  sendDataByFileId(fileId: string, data: any){
-    this.socket.emit('message', {fileId: fileId, data: data});
+  sendDataByFileId(fileId: string, data: any) {
+    this.socket.emit('message', { fileId: fileId, data: data });
     console.log(data);
   }
 
@@ -91,16 +91,16 @@ export class FileService {
     ) as Observable<File[]>;
   }
 
-  deleteById(id: string){
+  deleteById(id: string) {
     return this.http.delete(`${environment.baseUrl}file/delete?id=${id}`)
   }
 
-  updateById(id: string, file: File){
+  updateById(id: string, file: File) {
     return this.http.put(`${environment.baseUrl}file/update?id=${id}`, file);
   }
 
   createFile(file: File) {
-    return this.http.post(`${environment.baseUrl}file/create`,file);
+    return this.http.post(`${environment.baseUrl}file/create`, file);
   }
 
 
@@ -111,15 +111,15 @@ export class FileService {
   //   ) as Observable<File[]>;
   // }
 
-  getFilesByDate(){
-    return this.http.get(`${environment.baseUrl}file/getFilesByDate` ) as Observable<File[]>;
+  getFilesByDate() {
+    return this.http.get(`${environment.baseUrl}file/getFilesByDate`) as Observable<File[]>;
   }
 
-  getFilesByTitle(){
-    return this.http.get(`${environment.baseUrl}file/getFilesByTitle` ) as Observable<File[]>;
+  getFilesByTitle() {
+    return this.http.get(`${environment.baseUrl}file/getFilesByTitle`) as Observable<File[]>;
   }
 
-  exportFile(spreadsheet: Spreadsheet, file: File, name: string){
+  exportFile(spreadsheet: Spreadsheet, file: File, name: string) {
     console.log(file);
     spreadsheet.save({
       // url:'https://ej2services.syncfusion.com/production/web-services/api/spreadsheet/save',
