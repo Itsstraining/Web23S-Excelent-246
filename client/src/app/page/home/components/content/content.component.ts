@@ -33,10 +33,10 @@ export class ContentComponent implements OnInit {
     this.auth$ = this.store.select('auth');
     this.files$ = this.store.select('file');
     this.auth$.subscribe((res) => {
-      
-        // console.log(this.fileService.currentUserId)
-        // this.userId = this.fileService.currentUserId;
-        // console.log(this.userId);
+
+      // console.log(this.fileService.currentUserId)
+      // this.userId = this.fileService.currentUserId;
+      // console.log(this.userId);
     });
     this.store.dispatch(FileActions.getFilesByUserId({ userId: localStorage.getItem('userId')! }));
     // this.appendItems();
@@ -61,7 +61,7 @@ export class ContentComponent implements OnInit {
     // console.log(file);
     setTimeout(() => {
       this.route.navigate([`/spreadsheet/${fileId}`]);
-    },1500)
+    }, 1500)
   }
 
   canRename(ownerId: string) {
@@ -75,7 +75,7 @@ export class ContentComponent implements OnInit {
 
   openDialog() {
     this.dialog.open(RenameDialogComponent);
-    
+
     this.store.dispatch(FileActions.getFileById({ fileId: this.fileService.idToUpdate! }));
   }
 
@@ -92,7 +92,7 @@ export class ContentComponent implements OnInit {
   }
 
   addItems(_method: string) {
-    for (let i = this.arr.length -1; this.arr.length <= this.arr2.length; i++) {
+    for (let i = this.arr.length - 1; this.arr.length <= this.arr2.length; i++) {
       this.arr.push(this.arr2[i]);
       break;
     }

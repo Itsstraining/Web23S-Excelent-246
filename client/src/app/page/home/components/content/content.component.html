@@ -59,57 +59,32 @@
 <div class="histories-contents">
   <app-loading *ngIf="(this.files$ | async)?.loading == true"></app-loading>
 </div>
-<app-wellcome
-  *ngIf="
+<app-wellcome *ngIf="
     (this.files$ | async)?.loading == false &&
     (this.files$ | async)?.files?.length == 0
-  "
-></app-wellcome>
-<div
-  infiniteScroll
-  [infiniteScrollDistance]="3"
-  [infiniteScrollThrottle]="50"
-  (scrolled)="onScrollDown($event)"
-  class="divTo"
-  *ngIf="(this.files$ | async)?.loading == false "
->
+  "></app-wellcome>
+<div infiniteScroll [infiniteScrollDistance]="3" [infiniteScrollThrottle]="50" (scrolled)="onScrollDown($event)"
+  class="divTo" *ngIf="(this.files$ | async)?.loading == false ">
   <!-- <div *ngFor="let f1 of (this.files$ | async)?.files " class="divToVua"> -->
   <div *ngFor="let f1 of this.arr " class="divToVua">
 
-    <img
-      class="histories-contents-file-logo"
-      src="../../../../../assets/logo/E-logo.png"
-    />
+    <img class="histories-contents-file-logo" src="../../../../../assets/logo/E-logo.png" />
     <span (click)="selectFile(f1.fileId)" class="histories-contents-title">{{
       f1.title
-    }}</span>
+      }}</span>
     <span class="histories-contents-owner">{{ f1.createdBy }}</span>
     <span class="histories-contents-date">{{ f1.createdDate }}</span>
-    <button
-      mat-icon-button
-      (click)="getId(f1.fileId)"
-      [matMenuTriggerFor]="menu"
-      aria-label="Example icon-button with a menu"
-    >
+    <button mat-icon-button (click)="getId(f1.fileId)" [matMenuTriggerFor]="menu"
+      aria-label="Example icon-button with a menu">
       <mat-icon>more_vert</mat-icon>
     </button>
     <mat-menu #menu="matMenu">
-      <button
-        (click)="openDialog()"
-        mat-menu-item
-        *ngIf="canRename(f1.ownerId) == false"
-        disabled
-      >
+      <button (click)="openDialog()" mat-menu-item *ngIf="canRename(f1.ownerId) == false" disabled>
         <mat-icon>text_fields </mat-icon>
 
         <span>Rename</span>
       </button>
-      <button
-        (click)="openDialog()"
-        mat-menu-item
-        *ngIf="canRename(f1.ownerId) == true"
-        (click)="getId(f1.fileId)"
-      >
+      <button (click)="openDialog()" mat-menu-item *ngIf="canRename(f1.ownerId) == true" (click)="getId(f1.fileId)">
         <mat-icon>text_fields</mat-icon>
         <span>Rename</span>
       </button>

@@ -25,7 +25,7 @@ export class RenameDialogComponent {
   constructor(
     public dialogRef: MatDialogRef<RenameDialogComponent>,
     private fileService: FileService,
-    private store: Store<{ file: FileState, auth: AuthState}>,
+    private store: Store<{ file: FileState, auth: AuthState }>,
     private router: Router
   ) {
     this.files$ = this.store.select('file');
@@ -49,10 +49,10 @@ export class RenameDialogComponent {
       console.log(data.file);
 
       // if (data.loading == false) {
-        this.file = { ...data.file! };
-        this.file.title = newName;
-        this.file.createdBy = data.file?.createdBy!;
-        this.file.createdDate = data.file?.createdDate!;
+      this.file = { ...data.file! };
+      this.file.title = newName;
+      this.file.createdBy = data.file?.createdBy!;
+      this.file.createdDate = data.file?.createdDate!;
       // }
     });
     console.log(this.file);
