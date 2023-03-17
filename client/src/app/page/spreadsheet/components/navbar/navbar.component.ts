@@ -129,7 +129,6 @@ export class NavbarComponent implements OnInit, OnDestroy {
   }
 
   menuItemText: string[] = [
-    'Open',
     'Save',
     'Exit',
     'Cut',
@@ -154,10 +153,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     {
       text: 'File',
       items: [
-        { text: 'Open', },
         { text: 'Save', },
-        { text: 'Exit', },
-
       ],
     },
     {
